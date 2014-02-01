@@ -31,6 +31,7 @@ M2CRYPTO_VER=0.21.1
 PY2EXE_VER=0.6.9
 SETUPTOOLS_VER=1.4
 MINIUPNPC_VER=1.9
+LIBNATPMP_VER=20131126
 
 ## File names for the source packages
 OPENSSL_PACKAGE=openssl-${OPENSSL_VER}.tar.gz
@@ -51,6 +52,7 @@ M2CRYPTO_PACKAGE=M2Crypto-${M2CRYPTO_VER}.tar.gz
 PY2EXE_PACKAGE=py2exe-${PY2EXE_VER}.win32-py2.7.exe
 SETUPTOOLS_PACKAGE=setuptools-${SETUPTOOLS_VER}.tar.gz
 MINIUPNPC_PACKAGE=miniupnpc-${MINIUPNPC_PACKAGE}.tar.gz
+LIBNATPMP_PACKAGE=libnatpmp-${LIBNATPMP_VER}.tar.gz
 
 # Hashes for packages with weak sigs or no sigs
 OPENSSL_HASH=6cc2a80b17d64de6b7bac985745fdaba971d54ffd7d38d3556f998d7c0c9cb5a
@@ -67,6 +69,7 @@ M2CRYPTO_HASH=25b94498505c2d800ee465db0cc1aff097b1615adc3ac042a1c85ceca264fc0a
 PY2EXE_HASH=610a8800de3d973ed5ed4ac505ab42ad058add18a68609ac09e6cf3598ef056c
 SETUPTOOLS_HASH=75d288687066ed124311d6ca5f40ffa92a0e81adcd7fff318c6e84082713cf39
 MINIUPNPC_HASH=2923e453e880bb949e3d4da9f83dd3cb6f08946d35de0b864d0339cf70934464
+LIBNATPMP_HASH=48f1ffa3cbd3731c087790a5324f386c859100312298c06e7fd89d764a6ec2c4
 
 ## Non-git package URLs
 OPENSSL_URL=https://www.openssl.org/source/${OPENSSL_PACKAGE}
@@ -86,3 +89,4 @@ M2CRYPTO_URL=https://pypi.python.org/packages/source/M/M2Crypto/${M2CRYPTO_PACKA
 PY2EXE_URL=http://softlayer-dal.dl.sourceforge.net/project/py2exe/py2exe/${PY2EXE_VER}/${PY2EXE_PACKAGE}
 SETUPTOOLS_URL=https://pypi.python.org/packages/source/s/setuptools/${SETUPTOOLS_PACKAGE}
 MINIUPNPC_URL=http://miniupnp.free.fr/files/${MINIUPNPC_PACKAGE}
+LIBNATPMP_URL=http://miniupnp.free.fr/files/${LIBNATPMP_PACKAGE}

@@ -30,6 +30,7 @@ files:
 - "dzip.sh"
 - "openssl.tar.gz"
 - "miniupnpc.tar.gz"
+- "libnatpmp.tar.gz"
 script: |
   INSTDIR="$HOME/install"
   export LIBRARY_PATH="$INSTDIR/lib"
@@ -96,6 +97,21 @@ script: |
   cp miniupnpc.h miniwget.h upnpcommands.h igd_desc_parse.h upnpreplyparse.h upnperrors.h miniupnpctypes.h portlistingparse.h declspec.h bsdqueue.h $INSTDIR/miniupnpc/include/miniupnpc
   cp miniupnpc.dll $INSTDIR/miniupnpc/lib/
   cp $INSTDIR/miniupnpc/lib/miniupnpc.dll $INSTDIR/Tor
+  cd ..
+  #
+  tar xzf libnatpmp.tar.gz
+  cd libnatpmp-*
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  # These commands are adapted from libnatpmp's build.bat, which doesn't allow
+  # overriding commands and command-line options.
+  i686-w64-mingw32-gcc -c $CFLAGS -Wall -Os -DWIN32 wingettimeofday.c
+  i686-w64-mingw32-gcc -c $CFLAGS -Wall -Os -DWIN32 -DENABLE_STRNATPMPERR -DNATPMP_EXPORTS getgateway.c
+  i686-w64-mingw32-gcc -c $CFLAGS -Wall -Os -DWIN32 -DENABLE_STRNATPMPERR -DNATPMP_EXPORTS natpmp.c
+  i686-w64-mingw32-dllwrap -k --driver-name i686-w64-mingw32-gcc --def natpmp.def --output-def natpmp.dll.def --implib natpmp.lib -o natpmp.dll getgateway.o natpmp.o wingettimeofday.o -lws2_32 -liphlpapi
+  mkdir -p $INSTDIR/libnatpmp/{include,lib}
+  cp natpmp.h declspec.h $INSTDIR/libnatpmp/include
+  cp natpmp.dll $INSTDIR/libnatpmp/lib
+  cp $INSTDIR/libnatpmp/lib/natpmp.dll $INSTDIR/Tor
   cd ..
   #
   cd tor

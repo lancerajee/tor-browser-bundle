@@ -25,6 +25,7 @@ remotes:
 files:
 - "openssl.tar.gz"
 - "miniupnpc.tar.gz"
+- "libnatpmp.tar.gz"
 - "bug10297.patch"
 - "bug5018.patch"
 - "apple-uni-sdk-10.6_20110407-0.flosoft1_i386.deb"
@@ -91,6 +92,13 @@ script: |
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
   make install CC=i686-apple-darwin11-gcc AR=i686-apple-darwin11-ar OS=Darwin INSTALLPREFIX=$INSTDIR/miniupnpc
   cp $INSTDIR/miniupnpc/lib/libminiupnpc.10.dylib $INSTDIR/TorBrowserBundle.app/Tor
+  cd ..
+  #
+  tar xzf libnatpmp.tar.gz
+  cd libnatpmp-*
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  make install CC="i686-apple-darwin11-gcc $LDFLAGS" AR=i686-apple-darwin11-ar OS=Darwin CFLAGS="$CFLAGS -fPIC -Wall -DENABLE_STRNATPMPERR" LDFLAGS="$LDFLAGS" INSTALLPREFIX=$INSTDIR/libnatpmp
+  cp $INSTDIR/libnatpmp/lib/libnatpmp.1.dylib $INSTDIR/TorBrowserBundle.app/Tor
   cd ..
   #
   cd tor

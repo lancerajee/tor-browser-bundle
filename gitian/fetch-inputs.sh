@@ -168,7 +168,7 @@ do
   get "${!PACKAGE}" "${MIRROR_URL_DCF}${!PACKAGE}"
 done
 
-for i in ZOPEINTERFACE TWISTED PY2EXE SETUPTOOLS MINIUPNPC
+for i in ZOPEINTERFACE TWISTED PY2EXE SETUPTOOLS MINIUPNPC LIBNATPMP
 do
   URL="${i}_URL"
   PACKAGE="${i}_PACKAGE"
@@ -217,7 +217,7 @@ fi
 
 # Verify packages with weak or no signatures via direct sha256 check
 # (OpenSSL is signed with MD5, and OSXSDK is not signed at all)
-for i in OSXSDK TOOLCHAIN4 NOSCRIPT MINGW MSVCR100 PYCRYPTO ARGPARSE ZOPEINTERFACE TWISTED M2CRYPTO SETUPTOOLS OPENSSL MINIUPNPC
+for i in OSXSDK TOOLCHAIN4 NOSCRIPT MINGW MSVCR100 PYCRYPTO ARGPARSE ZOPEINTERFACE TWISTED M2CRYPTO SETUPTOOLS OPENSSL MINIUPNPC LIBNATPMP
 do
    PACKAGE="${i}_PACKAGE"
    HASH="${i}_HASH"
@@ -266,6 +266,7 @@ ln -sf "$M2CRYPTO_PACKAGE" m2crypto.tar.gz
 ln -sf "$PY2EXE_PACKAGE" py2exe.exe
 ln -sf "$SETUPTOOLS_PACKAGE" setuptools.tar.gz
 ln -sf "$MINIUPNPC_PACKAGE" miniupnpc.tar.gz
+ln -sf "$LIBNATPMP_PACKAGE" libnatpmp.tar.gz
 
 # Fetch latest gitian-builder itself
 # XXX - this is broken if a non-standard inputs dir is selected using the command line flag.
