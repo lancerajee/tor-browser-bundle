@@ -22,7 +22,8 @@ ClientTransportPlugin obfs2,obfs3 exec ./Tor/PluggableTransports/obfsproxy.bin m
 ## flash proxy configuration
 #
 # # The flashproxy bridge address and port are ignored.
-# Bridge flashproxy 0.0.1.0:1
+UseBridges 1
+Bridge flashproxy 0.0.1.0:1
 
 # Change the second number here (:0) if you have set up static port forwarding.
-ClientTransportPlugin flashproxy exec ./Tor/PluggableTransports/flashproxy-client --register --port-forwarding-helper ./Tor/tor-fw-helper :0 :0
+ClientTransportPlugin flashproxy exec ./Tor/PluggableTransports/flashproxy-client --register --port-forwarding-helper ./Tor/tor-fw-helper --log flashproxy-client.log :0 :0
