@@ -125,11 +125,12 @@ script: |
   git archive HEAD | tar -x -C $OUTDIR/src
   ./autogen.sh
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
-  ./configure --disable-asciidoc --host=i686-w64-mingw32 --with-libevent-dir=$INSTDIR/libevent --with-openssl-dir=$INSTDIR/openssl --prefix=$INSTDIR --with-zlib-dir=$INSTDIR/zlib/
+  ./configure --disable-asciidoc --host=i686-w64-mingw32 --with-libevent-dir=$INSTDIR/libevent --with-openssl-dir=$INSTDIR/openssl --enable-upnp --with-libminiupnpc-dir=$INSTDIR/miniupnpc --enable-nat-pmp --with-libnatpmp-dir=$INSTDIR/libnatpmp --prefix=$INSTDIR --with-zlib-dir=$INSTDIR/zlib/
   make $MAKEOPTS
   make install
   cd ..
   install -s $INSTDIR/bin/tor.exe $INSTDIR/Tor/
+  install -s $INSTDIR/bin/tor-fw-helper.exe $INSTDIR/Tor/
   cp $INSTDIR/share/tor/geoip $INSTDIR/Data/Tor/
   # XXX: Geoip files..
   #

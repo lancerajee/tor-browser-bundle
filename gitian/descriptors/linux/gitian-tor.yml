@@ -98,7 +98,7 @@ script: |
   #git archive HEAD | tar -x -C $OUTDIR/src
   ./autogen.sh
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
-  ./configure --disable-asciidoc --with-libevent-dir=$INSTDIR/libevent --with-openssl-dir=$INSTDIR/openssl --prefix=$INSTDIR
+  ./configure --disable-asciidoc --with-libevent-dir=$INSTDIR/libevent --with-openssl-dir=$INSTDIR/openssl --enable-upnp --with-libminiupnpc-dir=$INSTDIR/miniupnpc --enable-nat-pmp --with-libnatpmp-dir=$INSTDIR/libnatpmp --prefix=$INSTDIR
   make $MAKEOPTS
   make install
   cp $INSTDIR/share/tor/geoip $INSTDIR/Data/Tor/
@@ -107,6 +107,9 @@ script: |
   objcopy --only-keep-debug $INSTDIR/bin/tor $INSTDIR/Debug/Tor/tor
   install -s $INSTDIR/bin/tor $INSTDIR/Tor/
   objcopy --add-gnu-debuglink=./Debug/Tor/tor $INSTDIR/Tor/tor
+  objcopy --only-keep-debug $INSTDIR/bin/tor-fw-helper $INSTDIR/Debug/Tor/tor-fw-helper
+  install -s $INSTDIR/bin/tor-fw-helper $INSTDIR/Tor/
+  objcopy --add-gnu-debuglink=./Debug/Tor/tor-fw-helper $INSTDIR/Tor/tor-fw-helper
   for i in $INSTDIR/Tor/*so*
   do
     LIB=`basename $i`
