@@ -27,6 +27,7 @@ files:
 - "bug5018.patch"
 - "dzip.sh"
 - "openssl.tar.gz"
+- "miniupnpc.tar.gz"
 script: |
   INSTDIR="$HOME/install"
   export LIBRARY_PATH="$INSTDIR/lib"
@@ -65,6 +66,14 @@ script: |
   make install
   cp $INSTDIR/openssl/lib/libssl.so.1.0.0 $INSTDIR/Tor/
   cp $INSTDIR/openssl/lib/libcrypto.so.1.0.0 $INSTDIR/Tor/
+  cd ..
+  #
+  tar xzf miniupnpc.tar.gz
+  cd miniupnpc-*
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  make
+  make install INSTALLPREFIX=$INSTDIR/miniupnpc
+  cp $INSTDIR/miniupnpc/lib/libminiupnpc.so.10 $INSTDIR/Tor/
   cd ..
   #
   chmod 700 $INSTDIR/Tor/*so*

@@ -25,9 +25,11 @@ remotes:
 files:
 - "bug10297.patch"
 - "bug5018.patch"
+- "miniupnpc-dllwrap.patch"
 - "binutils.tar.bz2"
 - "dzip.sh"
 - "openssl.tar.gz"
+- "miniupnpc.tar.gz"
 script: |
   INSTDIR="$HOME/install"
   export LIBRARY_PATH="$INSTDIR/lib"
@@ -79,6 +81,21 @@ script: |
   make
   make install
   cp $INSTDIR/openssl/bin/*.dll $INSTDIR/Tor/
+  cd ..
+  #
+  tar xzf miniupnpc.tar.gz
+  cd miniupnpc-*
+  patch -p0 < ~/build/miniupnpc-dllwrap.patch
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  # Building miniupnpcstrings.h with Makefile uses a shell script. With
+  # Makefile.mingw it tries to build and run a Windows executable
+  # (wingenminiupnpcstrings), which fails because we are cross-compiling.
+  make -f Makefile miniupnpcstrings.h
+  make -f Makefile.mingw -o miniupnpcstrings.h CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar DLLWRAP=i686-w64-mingw32-dllwrap OS=NT-5.1 CFLAGS="$CFLAGS -Wall -DNDEBUG -D_WIN32_WINNT=0X501"
+  mkdir -p $INSTDIR/miniupnpc/{include/miniupnpc,lib}
+  cp miniupnpc.h miniwget.h upnpcommands.h igd_desc_parse.h upnpreplyparse.h upnperrors.h miniupnpctypes.h portlistingparse.h declspec.h bsdqueue.h $INSTDIR/miniupnpc/include/miniupnpc
+  cp miniupnpc.dll $INSTDIR/miniupnpc/lib/
+  cp $INSTDIR/miniupnpc/lib/miniupnpc.dll $INSTDIR/Tor
   cd ..
   #
   cd tor

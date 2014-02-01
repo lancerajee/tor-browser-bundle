@@ -24,6 +24,7 @@ remotes:
   "dir": "zlib"
 files:
 - "openssl.tar.gz"
+- "miniupnpc.tar.gz"
 - "bug10297.patch"
 - "bug5018.patch"
 - "apple-uni-sdk-10.6_20110407-0.flosoft1_i386.deb"
@@ -83,6 +84,13 @@ script: |
   make install
   cp $INSTDIR/libevent/lib/libevent-*.dylib $INSTDIR/TorBrowserBundle.app/Tor/
   LIBEVENT_FILE=`basename $INSTDIR/libevent/lib/libevent-*.dylib`
+  cd ..
+  #
+  tar xzf miniupnpc.tar.gz
+  cd miniupnpc-*
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  make install CC=i686-apple-darwin11-gcc AR=i686-apple-darwin11-ar OS=Darwin INSTALLPREFIX=$INSTDIR/miniupnpc
+  cp $INSTDIR/miniupnpc/lib/libminiupnpc.10.dylib $INSTDIR/TorBrowserBundle.app/Tor
   cd ..
   #
   cd tor
