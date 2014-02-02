@@ -1,7 +1,7 @@
 TORBROWSER_VERSION=3.5.2
 BUNDLE_LOCALES="ar de es-ES fa fr it ko nl pl pt-PT ru vi zh-CN"
 
-VERIFY_TAGS=1
+VERIFY_TAGS=0
 
 TORBROWSER_TAG=tor-browser-24.3.0esr-3.5.2-build2
 TOR_TAG=tor-0.2.4.20
@@ -14,7 +14,7 @@ LIBEVENT_TAG=release-2.0.21-stable
 MINGW_REV=6184
 PYPTLIB_TAG=pyptlib-0.0.4
 OBFSPROXY_TAG=obfsproxy-0.2.3
-FLASHPROXY_TAG=1.4
+FLASHPROXY_TAG=c56dfcf8c84f8cde3ceadc24423f3e1a6243bf8d 
 
 GITIAN_TAG=tor-browser-builder-3.0-4
 
