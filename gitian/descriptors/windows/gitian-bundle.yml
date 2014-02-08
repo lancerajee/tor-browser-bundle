@@ -108,6 +108,10 @@ script: |
   if [ $BUILD_PT_BUNDLES ]; then
     unzip ~/build/pluggable-transports-win32-gbuilt.zip
     cat ~/build/torrc-defaults-appendix-windows >> Data/Tor/torrc-defaults
+    # py2exe-built programs using M2Crypto need libeay32.dll and ssleay32.dll
+    # to be in their DLL search path (which includes the directory containing
+    # the program).
+    cp Tor/libeay32.dll Tor/ssleay32.dll Tor/PluggableTransports
   fi
   cd ..
   #
