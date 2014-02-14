@@ -28,7 +28,6 @@ files:
 - "dzip.sh"
 - "openssl.tar.gz"
 - "miniupnpc.tar.gz"
-- "libnatpmp.tar.gz"
 script: |
   INSTDIR="$HOME/install"
   export LIBRARY_PATH="$INSTDIR/lib"
@@ -77,14 +76,6 @@ script: |
   cp $INSTDIR/miniupnpc/lib/libminiupnpc.so.10 $INSTDIR/Tor/
   cd ..
   #
-  tar xzf libnatpmp.tar.gz
-  cd libnatpmp-*
-  find -type f | xargs touch --date="$REFERENCE_DATETIME"
-  make
-  make install INSTALLPREFIX=$INSTDIR/libnatpmp
-  cp $INSTDIR/libnatpmp/lib/libnatpmp.so.1 $INSTDIR/Tor/
-  cd ..
-  #
   chmod 700 $INSTDIR/Tor/*so*
   #
   cd tor
@@ -98,7 +89,7 @@ script: |
   #git archive HEAD | tar -x -C $OUTDIR/src
   ./autogen.sh
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
-  ./configure --disable-asciidoc --with-libevent-dir=$INSTDIR/libevent --with-openssl-dir=$INSTDIR/openssl --enable-upnp --with-libminiupnpc-dir=$INSTDIR/miniupnpc --enable-nat-pmp --with-libnatpmp-dir=$INSTDIR/libnatpmp --prefix=$INSTDIR
+  ./configure --disable-asciidoc --with-libevent-dir=$INSTDIR/libevent --with-openssl-dir=$INSTDIR/openssl --enable-upnp --with-libminiupnpc-dir=$INSTDIR/miniupnpc --prefix=$INSTDIR
   make $MAKEOPTS
   make install
   cp $INSTDIR/share/tor/geoip $INSTDIR/Data/Tor/

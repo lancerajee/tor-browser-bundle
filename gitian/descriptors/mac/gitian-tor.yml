@@ -25,7 +25,6 @@ remotes:
 files:
 - "openssl.tar.gz"
 - "miniupnpc.tar.gz"
-- "libnatpmp.tar.gz"
 - "bug10297.patch"
 - "bug5018.patch"
 - "apple-uni-sdk-10.6_20110407-0.flosoft1_i386.deb"
@@ -94,13 +93,6 @@ script: |
   cp $INSTDIR/miniupnpc/lib/libminiupnpc.10.dylib $INSTDIR/TorBrowserBundle.app/Tor
   cd ..
   #
-  tar xzf libnatpmp.tar.gz
-  cd libnatpmp-*
-  find -type f | xargs touch --date="$REFERENCE_DATETIME"
-  make install CC="i686-apple-darwin11-gcc $LDFLAGS" AR=i686-apple-darwin11-ar OS=Darwin CFLAGS="$CFLAGS -fPIC -Wall -DENABLE_STRNATPMPERR" LDFLAGS="$LDFLAGS" INSTALLPREFIX=$INSTDIR/libnatpmp
-  cp $INSTDIR/libnatpmp/lib/libnatpmp.1.dylib $INSTDIR/TorBrowserBundle.app/Tor
-  cd ..
-  #
   cd tor
   git update-index --refresh -q
   export GIT_COMMITTER_NAME="nobody"
@@ -112,7 +104,7 @@ script: |
   git archive HEAD | tar -x -C $OUTDIR/src
   ./autogen.sh
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
-  ./configure --enable-static-openssl --disable-asciidoc --host=i686-apple-darwin11 --with-libevent-dir=$INSTDIR/libevent --with-openssl-dir=$INSTDIR/openssl --enable-upnp --with-libminiupnpc-dir=$INSTDIR/miniupnpc --enable-nat-pmp --with-libnatpmp-dir=$INSTDIR/libnatpmp --prefix=$INSTDIR --with-zlib-dir=$INSTDIR/zlib/
+  ./configure --enable-static-openssl --disable-asciidoc --host=i686-apple-darwin11 --with-libevent-dir=$INSTDIR/libevent --with-openssl-dir=$INSTDIR/openssl --enable-upnp --with-libminiupnpc-dir=$INSTDIR/miniupnpc --prefix=$INSTDIR --with-zlib-dir=$INSTDIR/zlib/
   make $MAKEOPTS
   make install
   cd ..
@@ -121,7 +113,7 @@ script: |
   cp $INSTDIR/share/tor/geoip $INSTDIR/TorBrowserBundle.app/Data/Tor/
   cd $INSTDIR/TorBrowserBundle.app/Tor/
   i686-apple-darwin11-install_name_tool -change /home/ubuntu/install/libevent/lib/$LIBEVENT_FILE @executable_path/$LIBEVENT_FILE tor
-  i686-apple-darwin11-install_name_tool -change $INSTDIR/miniupnpc/lib/libminiupnpc.10.dylib @executable_path/libminiupnpc.10.dylib -change libnatpmp.1.dylib @executable_path/libnatpmp.1.dylib tor-fw-helper
+  i686-apple-darwin11-install_name_tool -change $INSTDIR/miniupnpc/lib/libminiupnpc.10.dylib @executable_path/libminiupnpc.10.dylib tor-fw-helper
   # XXX: Geoip files..
   #
   #cp -a /usr/lib/gcc/i686-apple-darwin10/4.6/libgcc_s_sjlj-1.dll $INSTDIR/Tor/
