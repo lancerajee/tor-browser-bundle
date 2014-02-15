@@ -26,4 +26,4 @@ UseBridges 1
 Bridge flashproxy 0.0.1.0:1
 
 # Change the second number here (:0) if you have set up static port forwarding.
-ClientTransportPlugin flashproxy exec ./Tor/PluggableTransports/flashproxy-client -4 --register --port-forwarding-helper ./Tor/tor-fw-helper --log flashproxy-client.log :0 :0
+ClientTransportPlugin flashproxy exec ./Tor/PluggableTransports/flashproxy-client -4 --register --port-forwarding-helper ./Tor/tor-fw-helper --log flashproxy-client.log :0 :9000
