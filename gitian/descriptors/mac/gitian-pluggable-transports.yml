@@ -28,6 +28,8 @@ files:
 - "zope.interface.zip"
 - "twisted.tar.bz2"
 - "m2crypto.tar.gz"
+- "go.tar.gz"
+- "cross-cgo.patch"
 - "apple-uni-sdk-10.6_20110407-0.flosoft1_i386.deb"
 - "multiarch-darwin11-cctools127.2-gcc42-5666.3-llvmgcc42-2336.1-Linux-120724.tar.xz"
 - "dzip.sh"
@@ -62,6 +64,20 @@ script: |
   cd ~/build
   # For OpenSSL
   sudo ln -s /usr/apple-osx/bin/apple-osx-gcc /usr/apple-osx/bin/i686-apple-darwin11-cc
+  #
+  # http://golang.org/doc/install/source#environment
+  export GOPATH="$HOME/go"
+  export GOOS=darwin
+  export GOARCH=386
+  tar xvf go.tar.gz
+  cd go
+  patch -p1 < ~/build/cross-cgo.patch
+  cd src
+  # Disable CC et al. that are set up for cross builds. (The Go compiler is a
+  # cross-compiler, but it needs to run on *this* host.)
+  CC= CFLAGS= LDFLAGS= LDSHARED= ./make.bash
+  sudo cp -a ../bin/* /usr/local/bin
+  cd ../..
   #
   cd pyptlib
   find -type f | xargs touch --date="$REFERENCE_DATETIME"

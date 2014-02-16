@@ -29,6 +29,7 @@ files:
 - "zope.interface.zip"
 - "twisted.tar.bz2"
 - "m2crypto.tar.gz"
+- "go.tar.gz"
 - "dzip.sh"
 script: |
   INSTDIR="$HOME/install"
@@ -49,6 +50,16 @@ script: |
   #
   mkdir -p $PTDIR
   mkdir -p $INSTDIR/Debug/
+  #
+  # http://golang.org/doc/install/source#environment
+  export GOPATH="$HOME/go"
+  tar xvf go.tar.gz
+  cd go/src
+  # https://code.google.com/p/go/issues/detail?id=6940#c6
+  # A PIE build fails on amd64 in cgo tests.
+  DEB_BUILD_HARDENING_PIE=0 ./make.bash
+  sudo cp -a ../bin/* /usr/local/bin
+  cd ../..
   #
   cd pyptlib
   find -type f | xargs touch --date="$REFERENCE_DATETIME"

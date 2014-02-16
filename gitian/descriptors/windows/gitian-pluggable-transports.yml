@@ -32,6 +32,8 @@ files:
 - "wine-wrappers"
 - "python.msi"
 - "py2exe.exe"
+- "go.tar.gz"
+- "cross-cgo.patch"
 - "dzip.sh"
 - "pyc-timestamp.sh"
 script: |
@@ -105,6 +107,18 @@ script: |
   LD_PRELOAD= $INSTPYTHON setup.py py2exe
   cp -a dist/gcc.exe dist/dllwrap.exe dist/swig.exe $WINEROOT/windows/
   cd ..
+  #
+  # http://golang.org/doc/install/source#environment
+  export GOPATH="$HOME/go"
+  export GOOS=windows
+  export GOARCH=386
+  tar xvf go.tar.gz
+  cd go
+  patch -p1 < ~/build/cross-cgo.patch
+  cd src
+  ./make.bash
+  sudo cp -a ../bin/* /usr/local/bin
+  cd ../..
   #
   tar xzf setuptools.tar.gz
   cd setuptools-*
