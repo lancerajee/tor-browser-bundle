@@ -30,6 +30,7 @@ TWISTED_VER=13.1.0
 M2CRYPTO_VER=0.21.1
 PY2EXE_VER=0.6.9
 SETUPTOOLS_VER=1.4
+GO_VER=1.2
 
 ## File names for the source packages
 OPENSSL_PACKAGE=openssl-${OPENSSL_VER}.tar.gz
@@ -49,6 +50,7 @@ TWISTED_PACKAGE=Twisted-${TWISTED_VER}.tar.bz2
 M2CRYPTO_PACKAGE=M2Crypto-${M2CRYPTO_VER}.tar.gz
 PY2EXE_PACKAGE=py2exe-${PY2EXE_VER}.win32-py2.7.exe
 SETUPTOOLS_PACKAGE=setuptools-${SETUPTOOLS_VER}.tar.gz
+GO_PACKAGE=go${GO_VER}.src.tar.gz
 
 # Hashes for packages with weak sigs or no sigs
 OPENSSL_HASH=6cc2a80b17d64de6b7bac985745fdaba971d54ffd7d38d3556f998d7c0c9cb5a
@@ -64,6 +66,7 @@ TWISTED_HASH=110e957dd8fc4c6eaba8abe4f0477e60b2873e3cf1c260325863fd2ef69341c6
 M2CRYPTO_HASH=25b94498505c2d800ee465db0cc1aff097b1615adc3ac042a1c85ceca264fc0a
 PY2EXE_HASH=610a8800de3d973ed5ed4ac505ab42ad058add18a68609ac09e6cf3598ef056c
 SETUPTOOLS_HASH=75d288687066ed124311d6ca5f40ffa92a0e81adcd7fff318c6e84082713cf39
+GO_HASH=9ab83fb8eafe39f4204ef0f8e84e5ff7e8f1d533ddb05f51e6dc81503e8c0ae4
 
 ## Non-git package URLs
 OPENSSL_URL=https://www.openssl.org/source/${OPENSSL_PACKAGE}
@@ -82,3 +85,4 @@ TWISTED_URL=https://pypi.python.org/packages/source/T/Twisted/${TWISTED_PACKAGE}
 M2CRYPTO_URL=https://pypi.python.org/packages/source/M/M2Crypto/${M2CRYPTO_PACKAGE}
 PY2EXE_URL=http://softlayer-dal.dl.sourceforge.net/project/py2exe/py2exe/${PY2EXE_VER}/${PY2EXE_PACKAGE}
 SETUPTOOLS_URL=https://pypi.python.org/packages/source/s/setuptools/${SETUPTOOLS_PACKAGE}
+GO_URL=https://go.googlecode.com/files/${GO_PACKAGE}
