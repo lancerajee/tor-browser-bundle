@@ -24,6 +24,8 @@ remotes:
   "dir": "flashproxy"
 - "url": "https://git.torproject.org/pluggable-transports/goptlib.git"
   "dir": "goptlib"
+- "url": "https://www.bamsoftware.com/git/meek.git"
+  "dir": "meek"
 files:
 - "openssl.tar.gz"
 - "pycrypto.tar.gz"
@@ -137,6 +139,13 @@ script: |
   ln -sf "$PWD" "$GOPATH/src/git.torproject.org/pluggable-transports/goptlib.git"
   go install git.torproject.org/pluggable-transports/goptlib.git
   cd ..
+  #
+  cd meek
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  cd meek-client
+  go build
+  cp -a meek-client $PTDIR
+  cd ../..
   #
   cd $INSTDIR
   #

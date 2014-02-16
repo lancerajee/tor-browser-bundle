@@ -23,6 +23,8 @@ remotes:
   "dir": "flashproxy"
 - "url": "https://git.torproject.org/pluggable-transports/goptlib.git"
   "dir": "goptlib"
+- "url": "https://www.bamsoftware.com/git/meek.git"
+  "dir": "meek"
 files:
 - "openssl.tar.gz"
 - "setuptools.tar.gz"
@@ -210,6 +212,13 @@ script: |
   ln -sf "$PWD" "$GOPATH/src/git.torproject.org/pluggable-transports/goptlib.git"
   CGO_ENABLED=1 CC="i686-w64-mingw32-gcc" go install git.torproject.org/pluggable-transports/goptlib.git
   cd ..
+  #
+  cd meek
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  cd meek-client
+  CGO_ENABLED=1 CC="i686-w64-mingw32-gcc" go build
+  cp -a meek-client.exe $PTDIR
+  cd ../..
   #
   # http://bugs.winehq.org/show_bug.cgi?id=3591
   cp -a $INSTDIR/python/python27.dll $PTDIR/

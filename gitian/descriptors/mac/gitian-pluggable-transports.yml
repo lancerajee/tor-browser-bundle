@@ -23,6 +23,8 @@ remotes:
   "dir": "flashproxy"
 - "url": "https://git.torproject.org/pluggable-transports/goptlib.git"
   "dir": "goptlib"
+- "url": "https://www.bamsoftware.com/git/meek.git"
+  "dir": "meek"
 files:
 - "openssl.tar.gz"
 - "pycrypto.tar.gz"
@@ -165,6 +167,15 @@ script: |
   ln -sf "$PWD" "$GOPATH/src/git.torproject.org/pluggable-transports/goptlib.git"
   CGO_ENABLED=1 CC="$CC $CFLAGS $LDFLAGS" go install git.torproject.org/pluggable-transports/goptlib.git
   cd ..
+  #
+  cd meek
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  cd meek-client
+  # https://code.google.com/p/go/issues/detail?id=4714#c7
+  # We need cgo for crypto/x509 support on mac.
+  CGO_ENABLED=1 CC="$CC $CFLAGS $LDFLAGS" go build
+  cp -a meek-client $PTDIR
+  cd ../..
   #
   cd $INSTDIR
   ~/build/dzip.sh pluggable-transports-mac$GBUILD_BITS-gbuilt.zip TorBrowserBundle.app
