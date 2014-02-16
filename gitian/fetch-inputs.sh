@@ -291,6 +291,7 @@ tor-browser           https://git.torproject.org/tor-browser.git          $TORBR
 pyptlib               https://git.torproject.org/pluggable-transports/pyptlib.git
 obfsproxy             https://git.torproject.org/pluggable-transports/obfsproxy.git
 flashproxy            https://git.torproject.org/flashproxy.git
+goptlib               https://git.torproject.org/pluggable-transports/goptlib.git
 EOF
 
 exit 0
