@@ -28,3 +28,11 @@ ClientTransportPlugin obfs2,obfs3 exec Tor\PluggableTransports\obfsproxy managed
 # receive connections from the Internet (the port for which you
 # configured port forwarding).
 ClientTransportPlugin flashproxy exec Tor\PluggableTransports\flashproxy-client --register :0 :9000
+
+
+## meek configuration
+#
+# # The meek bridge address and port are ignored.
+# Bridge meek 0.0.2.0:1
+
+ClientTransportPlugin meek exec ./Tor/PluggableTransports/meek-client --url=https://meek-reflect.appspot.com/ --front=www.google.com --log meek-client.log
