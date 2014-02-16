@@ -33,6 +33,7 @@ ClientTransportPlugin flashproxy exec PluggableTransports/flashproxy-client --re
 ## meek configuration
 #
 # # The meek bridge address and port are ignored.
-# Bridge meek 0.0.2.0:1
+UseBridges 1
+Bridge meek 0.0.2.0:1
 
 ClientTransportPlugin meek exec PluggableTransports/meek-client --url=https://meek-reflect.appspot.com/ --front=www.google.com --log meek-client.log
