@@ -22,6 +22,8 @@ remotes:
   "dir": "obfsproxy"
 - "url": "https://git.torproject.org/flashproxy.git"
   "dir": "flashproxy"
+- "url": "https://git.torproject.org/pluggable-transports/goptlib.git"
+  "dir": "goptlib"
 files:
 - "openssl.tar.gz"
 - "pycrypto.tar.gz"
@@ -127,6 +129,13 @@ script: |
   cp -a dist/flashproxy-client/{flashproxy-client,flashproxy-reg-appspot,flashproxy-reg-email,flashproxy-reg-http,flashproxy-reg-url} $PTDIR/
   mkdir -p $INSTDIR/Docs/FlashProxy
   cp -a {doc/*,README,LICENSE,ChangeLog} $INSTDIR/Docs/FlashProxy
+  cd ..
+  #
+  cd goptlib
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  mkdir -p "$GOPATH/src/git.torproject.org/pluggable-transports"
+  ln -sf "$PWD" "$GOPATH/src/git.torproject.org/pluggable-transports/goptlib.git"
+  go install git.torproject.org/pluggable-transports/goptlib.git
   cd ..
   #
   cd $INSTDIR
