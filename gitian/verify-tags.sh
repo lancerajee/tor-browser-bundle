@@ -64,6 +64,7 @@ pyptlib               pyptlib.gpg               $PYPTLIB_TAG
 obfsproxy             obfsproxy.gpg             $OBFSPROXY_TAG
 flashproxy            flashproxy.gpg            $FLASHPROXY_TAG
 goptlib               goptlib.gpg               $GOPTLIB_TAG
+meek                  meek.gpg                  $MEEK_TAG
 EOF
 
 cd "$INPUTS_DIR"
