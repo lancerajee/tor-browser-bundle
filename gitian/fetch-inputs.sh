@@ -159,16 +159,16 @@ do
   get "${!PACKAGE}" "${MIRROR_URL}${!PACKAGE}"
 done
 
-# XXX: Omit ARGPARSE because Google won't allow wget -N and because the
-# download seems to 404 about 50% of the time.
-for i in ARGPARSE
+# XXX: Omit googlecode.com packages because Google won't allow wget -N
+# and because the download seems to 404 about 50% of the time.
+for i in ARGPARSE GO
 do
   PACKAGE="${i}_PACKAGE"
   URL="${MIRROR_URL_DCF}${!PACKAGE}"
   get "${!PACKAGE}" "${MIRROR_URL_DCF}${!PACKAGE}"
 done
 
-for i in ZOPEINTERFACE TWISTED PY2EXE SETUPTOOLS GO
+for i in ZOPEINTERFACE TWISTED PY2EXE SETUPTOOLS
 do
   URL="${i}_URL"
   PACKAGE="${i}_PACKAGE"
