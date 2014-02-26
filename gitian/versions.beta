@@ -2,7 +2,7 @@ TORBROWSER_VERSION=3.6-beta-2
 BUNDLE_LOCALES="ar de es-ES fa fr it ko nl pl pt-PT ru vi zh-CN"
 BUILD_PT_BUNDLES=1
 
-VERIFY_TAGS=0
+VERIFY_TAGS=1
 
 TORBROWSER_TAG=tor-browser-24.3.0esr-3.5.2.1-build2
 TOR_TAG=tor-0.2.4.20
