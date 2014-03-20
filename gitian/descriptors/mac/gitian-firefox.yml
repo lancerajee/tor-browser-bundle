@@ -23,6 +23,7 @@ files:
 - "re-dzip.sh"
 - "dzip.sh"
 - "versions"
+- "0001-Don-t-prohibit-name-lookups-when-socks_remote_dns-tr.patch"
 script: |
   INSTDIR="$HOME/install/"
   source versions
@@ -50,6 +51,11 @@ script: |
   sudo ln -s /usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/libstdc++.6.dylib /usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/libstdc++.dylib
   #
   cd tor-browser
+  git update-index --refresh -q
+  export GIT_COMMITTER_NAME="nobody"
+  export GIT_COMMITTER_EMAIL="nobody@localhost"
+  export GIT_COMMITTER_DATE="$REFERENCE_DATETIME"
+  git am ~/build/0001-Don-t-prohibit-name-lookups-when-socks_remote_dns-tr.patch
   mv .mozconfig-mac .mozconfig
   grep -v '^pref(\"torbrowser.version\",' browser/app/profile/000-tor-browser.js > browser/app/profile/000-tor-browser.js.fixed
   cat ../torbrowser.version >> browser/app/profile/000-tor-browser.js.fixed

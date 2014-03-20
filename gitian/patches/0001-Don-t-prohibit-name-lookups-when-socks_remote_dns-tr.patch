@@ -1,0 +1,39 @@
+From d869ec65de289e3115dfe57ffc2de3a827442910 Mon Sep 17 00:00:00 2001
+From: David Fifield <david@bamsoftware.com>
+Date: Sat, 15 Mar 2014 04:50:46 +0000
+Subject: [PATCH] Don't prohibit name lookups when socks_remote_dns=true.
+
+This partially undoes 5069a3ee8fa51546a8ad582e6004be66bc9748aa. The
+purpose is to allow the meek-http-helper extension to make requests on
+the network directly.
+
+https://trac.torproject.org/projects/tor/ticket/11183#comment:6
+---
+ netwerk/dns/nsDNSService2.cpp |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/netwerk/dns/nsDNSService2.cpp b/netwerk/dns/nsDNSService2.cpp
+index 9af2652..1ff93cc 100644
+--- a/netwerk/dns/nsDNSService2.cpp
++++ b/netwerk/dns/nsDNSService2.cpp
+@@ -612,7 +612,7 @@ nsDNSService::AsyncResolve(const nsACString  &hostname,
+         if (mDisableDNS) {
+             // Allow IP lookups through, but nothing else.
+             if (PR_StringToNetAddr(hostname.BeginReading(), &tempAddr) != PR_SUCCESS) {
+-                return NS_ERROR_UNKNOWN_PROXY_HOST; // XXX: NS_ERROR_NOT_IMPLEMENTED?
++                // return NS_ERROR_UNKNOWN_PROXY_HOST; // XXX: NS_ERROR_NOT_IMPLEMENTED?
+             }
+         }
+ 
+@@ -732,7 +732,7 @@ nsDNSService::Resolve(const nsACString &hostname,
+     if (mDisableDNS) {
+         // Allow IP lookups through, but nothing else.
+         if (PR_StringToNetAddr(hostname.BeginReading(), &tempAddr) != PR_SUCCESS) {
+-            return NS_ERROR_UNKNOWN_PROXY_HOST; // XXX: NS_ERROR_NOT_IMPLEMENTED?
++            // return NS_ERROR_UNKNOWN_PROXY_HOST; // XXX: NS_ERROR_NOT_IMPLEMENTED?
+         }
+     }
+ 
+-- 
+1.7.9.5
+
