@@ -20,6 +20,8 @@ remotes:
   "dir": "torbutton"
 - "url": "https://git.torproject.org/https-everywhere.git"
   "dir": "https-everywhere"
+- "url": "https://www.bamsoftware.com/git/meek.git"
+  "dir": "meek"
 files:
 # TODO: Can we use an env for this file+version??
 - "tor-browser-mac32-gbuilt.zip"
@@ -91,6 +93,10 @@ script: |
   cd https-everywhere@eff.org
   unzip ../https-everywhere@eff.org.xpi
   rm ../https-everywhere@eff.org.xpi
+  cd ~/build/
+  #
+  cd meek/firefox
+  ~/build/dzip.sh ../../TorBrowserBundle.app/Data/Browser/profile.default/extensions/meek-http-helper@bamsoftware.com.xpi .
   cd ~/build/
   #
   unzip relativelink-src.zip
