@@ -52,6 +52,7 @@ script: |
   # 
   mkdir -p $OUTDIR/
   mkdir -p tbb-windows-installer/"Tor Browser"/Data/Browser/profile.default/extensions/https-everywhere@eff.org
+  mkdir -p tbb-windows-installer/"Tor Browser"/Data/Browser/profile.meek-http-helper/extensions
   mkdir -p tbb-windows-installer/"Tor Browser"/Data/Browser/Caches
   mkdir -p tbb-windows-installer/"Tor Browser"/Docs/sources
   #
@@ -96,7 +97,7 @@ script: |
   #
   cd meek/firefox
   ~/build/dzip.sh ../meek-http-helper@bamsoftware.com.xpi .
-  mv ../meek-http-helper@bamsoftware.com.xpi ../../tbb-windows-installer/"Tor Browser"/Data/Browser/profile.default/extensions/meek-http-helper@bamsoftware.com.xpi
+  mv ../meek-http-helper@bamsoftware.com.xpi ../../tbb-windows-installer/"Tor Browser"/Data/Browser/profile.meek-http-helper/extensions/meek-http-helper@bamsoftware.com.xpi
   cd ~/build/
   #
   unzip relativelink-src.zip

@@ -57,6 +57,7 @@ script: |
   mkdir -p $OUTDIR/
   mkdir -p tor-browser/Data/Browser/Caches
   mkdir -p tor-browser/Data/Browser/profile.default/extensions/https-everywhere@eff.org
+  mkdir -p tor-browser/Data/Browser/profile.meek-http-helper/extensions
   mkdir -p tor-browser/Docs/sources/
   #
   cp *.xpi tor-browser/Data/Browser/profile.default/extensions/
@@ -96,7 +97,7 @@ script: |
   cd ~/build
   #
   cd meek/firefox
-  ~/build/dzip.sh ../../tor-browser/Data/Browser/profile.default/extensions/meek-http-helper@bamsoftware.com.xpi .
+  ~/build/dzip.sh ../../tor-browser/Data/Browser/profile.meek-http-helper/extensions/meek-http-helper@bamsoftware.com.xpi .
   cd ~/build/
   #
   unzip relativelink-src.zip
