@@ -33,7 +33,6 @@ files:
 - "i686-w64-mingw32-ld"
 - "msvcr100.dll"
 - "versions"
-- "0001-Don-t-prohibit-name-lookups-when-socks_remote_dns-tr.patch"
 script: |
   INSTDIR="$HOME/install"
   source versions
@@ -120,11 +119,6 @@ script: |
   cd ..
   #
   cd tor-browser
-  git update-index --refresh -q
-  export GIT_COMMITTER_NAME="nobody"
-  export GIT_COMMITTER_EMAIL="nobody@localhost"
-  export GIT_COMMITTER_DATE="$REFERENCE_DATETIME"
-  git am ~/build/0001-Don-t-prohibit-name-lookups-when-socks_remote_dns-tr.patch
   mv .mozconfig-mingw .mozconfig
   # FIXME
   # Ideally, using LDFLAGS (and e.g. DLLFLAGS for NSS) would be enough to get
