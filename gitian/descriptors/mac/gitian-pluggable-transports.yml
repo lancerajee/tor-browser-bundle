@@ -23,7 +23,7 @@ remotes:
   "dir": "flashproxy"
 - "url": "https://git.torproject.org/pluggable-transports/goptlib.git"
   "dir": "goptlib"
-- "url": "https://www.bamsoftware.com/git/meek.git"
+- "url": "https://git.torproject.org/pluggable-transports/meek.git"
   "dir": "meek"
 files:
 - "openssl.tar.gz"

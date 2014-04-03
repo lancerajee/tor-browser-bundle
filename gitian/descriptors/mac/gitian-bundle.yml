@@ -20,7 +20,7 @@ remotes:
   "dir": "torbutton"
 - "url": "https://git.torproject.org/https-everywhere.git"
   "dir": "https-everywhere"
-- "url": "https://www.bamsoftware.com/git/meek.git"
+- "url": "https://git.torproject.org/pluggable-transports/meek.git"
   "dir": "meek"
 files:
 # TODO: Can we use an env for this file+version??

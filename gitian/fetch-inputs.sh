@@ -292,7 +292,7 @@ pyptlib               https://git.torproject.org/pluggable-transports/pyptlib.gi
 obfsproxy             https://git.torproject.org/pluggable-transports/obfsproxy.git
 flashproxy            https://git.torproject.org/flashproxy.git
 goptlib               https://git.torproject.org/pluggable-transports/goptlib.git
-meek                  https://www.bamsoftware.com/git/meek.git
+meek                  https://git.torproject.org/pluggable-transports/meek.git
 EOF
 
 exit 0
