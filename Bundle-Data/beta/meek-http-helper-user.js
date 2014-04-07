@@ -1,7 +1,7 @@
 // http://kb.mozillazine.org/User.js_file
 
 // The meek-http-helper extension uses dump to write its listening port number
-// to stderr.
+// to stdout.
 user_pref("browser.dom.window.dump.enabled", true);
 
 // 0 is "No proxy".
