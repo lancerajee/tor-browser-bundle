@@ -145,6 +145,10 @@ script: |
   cd meek-client
   go build
   cp -a meek-client $PTDIR
+  cd ..
+  cd meek-client-torbrowser
+  go build
+  cp -a meek-client-torbrowser $PTDIR
   cd ../..
   #
   cd $INSTDIR

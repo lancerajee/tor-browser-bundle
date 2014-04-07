@@ -175,6 +175,10 @@ script: |
   # We need cgo for crypto/x509 support on mac.
   CGO_ENABLED=1 CC="$CC $CFLAGS $LDFLAGS" go build
   cp -a meek-client $PTDIR
+  cd ..
+  cd meek-client-torbrowser
+  CGO_ENABLED=1 CC="$CC $CFLAGS $LDFLAGS" go build
+  cp -a meek-client-torbrowser $PTDIR
   cd ../..
   #
   cd $INSTDIR
