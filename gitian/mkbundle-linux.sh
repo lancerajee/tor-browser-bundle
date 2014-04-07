@@ -52,6 +52,7 @@ cd ./Bundle-Data/
 rm -f $GITIAN_DIR/inputs/tbb-docs.zip
 $WRAPPER_DIR/build-helpers/dzip.sh $GITIAN_DIR/inputs/tbb-docs.zip ./Docs/
 cp beta/linux/torrc-defaults-appendix $GITIAN_DIR/inputs/torrc-defaults-appendix-linux
+cp beta/meek-http-helper-user.js $GITIAN_DIR/inputs/
 
 cd linux
 rm -f $GITIAN_DIR/inputs/linux-skeleton.zip

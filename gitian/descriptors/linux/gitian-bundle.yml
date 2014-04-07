@@ -33,6 +33,7 @@ files:
 - "pluggable-transports-linux32-gbuilt.zip"
 - "pluggable-transports-linux64-gbuilt.zip"
 - "torrc-defaults-appendix-linux"
+- "meek-http-helper-user.js"
 - "relativelink-src.zip"
 - "linux-skeleton.zip"
 - "linux-langpacks.zip"
@@ -113,6 +114,7 @@ script: |
   if [ $BUILD_PT_BUNDLES ]; then
     unzip ~/build/pluggable-transports-linux$GBUILD_BITS-gbuilt.zip
     cat ~/build/torrc-defaults-appendix-linux >> Data/Tor/torrc-defaults
+    cat ~/build/meek-http-helper-user.js >> Data/Browser/profile.meek-http-helper/user.js
   fi
   chmod 700 Data/Browser
   chmod 700 Data/Tor

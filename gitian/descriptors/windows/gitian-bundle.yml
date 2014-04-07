@@ -30,6 +30,7 @@ files:
 - "tor-win32-gbuilt.zip"
 - "pluggable-transports-win32-gbuilt.zip"
 - "torrc-defaults-appendix-windows"
+- "meek-http-helper-user.js"
 - "relativelink-src.zip"
 - "windows-skeleton.zip"
 - "win32-langpacks.zip"
@@ -116,6 +117,7 @@ script: |
   if [ $BUILD_PT_BUNDLES ]; then
     unzip ~/build/pluggable-transports-win32-gbuilt.zip
     cat ~/build/torrc-defaults-appendix-windows >> Data/Tor/torrc-defaults
+    cat ~/build/meek-http-helper-user.js >> Data/Browser/profile.meek-http-helper/user.js
   fi
   cd ..
   #

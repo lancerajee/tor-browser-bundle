@@ -54,6 +54,7 @@ cd ./Bundle-Data/
 rm -f $GITIAN_DIR/inputs/tbb-docs.zip
 $WRAPPER_DIR/build-helpers/dzip.sh $GITIAN_DIR/inputs/tbb-docs.zip ./Docs/
 cp beta/windows/torrc-defaults-appendix $GITIAN_DIR/inputs/torrc-defaults-appendix-windows
+cp beta/meek-http-helper-user.js $GITIAN_DIR/inputs/
 
 cd windows
 rm -f $GITIAN_DIR/inputs/windows-skeleton.zip
