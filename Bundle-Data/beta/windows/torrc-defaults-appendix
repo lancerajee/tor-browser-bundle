@@ -36,4 +36,4 @@ ClientTransportPlugin flashproxy exec Tor\PluggableTransports\flashproxy-client 
 UseBridges 1
 Bridge meek 0.0.2.0:1
 
-ClientTransportPlugin meek exec ./Tor/PluggableTransports/terminateprocess-buffer ./Tor/PluggableTransports/meek-client-torbrowser --url=https://meek-reflect.appspot.com/ --front=www.google.com --log meek-client.log
+ClientTransportPlugin meek exec ./Tor/PluggableTransports/terminateprocess-buffer ./Tor/PluggableTransports/meek-client-torbrowser --exit-on-stdin-eof --log meek-client-torbrowser.log -- ./Tor/PluggableTransports/meek-client --url=https://meek-reflect.appspot.com/ --front=www.google.com --log meek-client.log
