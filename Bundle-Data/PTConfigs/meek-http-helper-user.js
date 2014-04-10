@@ -16,4 +16,9 @@ user_pref("network.proxy.socks_remote_dns", false);
 // https://trac.torproject.org/projects/tor/ticket/11183#comment:9
 user_pref("security.enable_tls_session_tickets", true);
 
+// Disable safe mode. In case of a crash, we don't want to prompt for a
+// safe-mode browser that has extensions disabled and no proxy.
+// https://support.mozilla.org/en-US/questions/951221#answer-410562
+user_pref("toolkit.startup.max_resumed_crashes", -1);
+
 user_pref("extensions.enabledAddons", "meek-http-helper@bamsoftware.com:1.0");
