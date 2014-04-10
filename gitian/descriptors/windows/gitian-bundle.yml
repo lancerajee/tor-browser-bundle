@@ -30,6 +30,7 @@ files:
 - "tor-win32-gbuilt.zip"
 - "pluggable-transports-win32-gbuilt.zip"
 - "torrc-defaults-appendix-windows"
+- "bridge_prefs.js"
 - "meek-http-helper-user.js"
 - "relativelink-src.zip"
 - "windows-skeleton.zip"
@@ -117,6 +118,7 @@ script: |
   if [ $BUILD_PT_BUNDLES ]; then
     unzip ~/build/pluggable-transports-win32-gbuilt.zip
     cat ~/build/torrc-defaults-appendix-windows >> Data/Tor/torrc-defaults
+    cat ~/build/bridge_prefs.js >> Data/Browser/profile.default/preferences/extension-overrides.js
     cat ~/build/meek-http-helper-user.js >> Data/Browser/profile.meek-http-helper/user.js
   fi
   cd ..
@@ -141,10 +143,10 @@ script: |
   #
   unzip ../win32-langpacks.zip
   cd win32-langpacks
-  for i in *.xpi
+  for LANG in $BUNDLE_LOCALES
   do
-    LANG=`basename $i .xpi`
-    cp $i ../"Tor Browser"/Data/Browser/profile.default/extensions/langpack-$LANG@firefox.mozilla.org.xpi
+    xpi=$LANG.xpi
+    cp $xpi ../"Tor Browser"/Data/Browser/profile.default/extensions/langpack-$LANG@firefox.mozilla.org.xpi
     cd ..
 
     # FF24 puts the prefs in a different jar:

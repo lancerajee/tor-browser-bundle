@@ -1,27 +1,33 @@
 TORBROWSER_VERSION=4.0-alpha-1
-BUNDLE_LOCALES="ar de es-ES fa fr it ko nl pl pt-PT ru vi zh-CN"
+BUNDLE_LOCALES="ar de es-ES fa fr it ko nl pl pt-PT ru tr vi zh-CN"
+BUILD_PT_BUNDLES=1
 
 VERIFY_TAGS=1
 
-TORBROWSER_TAG=tor-browser-24.3.0esr-3.5.2.1-build2
-TOR_TAG=tor-0.2.5.1-alpha
-TORLAUNCHER_TAG=0.2.4.4
-TORBUTTON_TAG=1.6.6.0
+FIREFOX_VERSION=24.4.0esr
+
+TORBROWSER_TAG=tor-browser-${FIREFOX_VERSION}-1-build1
+TOR_TAG=tor-0.2.5.2-alpha
+TORLAUNCHER_TAG=0.2.5.1a
+TORBUTTON_TAG=1.6.7.0
 HTTPSE_TAG=3.4.5
 NSIS_TAG=v0.1
 ZLIB_TAG=v1.2.8
 LIBEVENT_TAG=release-2.0.21-stable
 MINGW_REV=6184
-PYPTLIB_TAG=pyptlib-0.0.4
-OBFSPROXY_TAG=obfsproxy-0.2.3
-FLASHPROXY_TAG=1.4
+PYPTLIB_TAG=pyptlib-0.0.5
+OBFSPROXY_TAG=obfsproxy-0.2.4
+FLASHPROXY_TAG=1.6
+FTEPROXY_TAG=0.2.6
+LIBDMG_TAG=dfd5e5cc3dc1191e37d3c3a6118975afdd1d7014
 GOPTLIB_TAG=0.1
 MEEK_TAG=0.4
 
-GITIAN_TAG=tor-browser-builder-3.0-4
+GITIAN_TAG=tor-browser-builder-3.x-5
 
-OPENSSL_VER=1.0.1f
-FIREFOX_LANG_VER=24.3.0esr
+OPENSSL_VER=1.0.1g
+GMP_VER=5.1.3
+FIREFOX_LANG_VER=$FIREFOX_VERSION
 BINUTILS_VER=2.22
 GCC_VER=4.6.3
 PYTHON_VER=2.7.5
@@ -36,8 +42,10 @@ GO_VER=1.2
 
 ## File names for the source packages
 OPENSSL_PACKAGE=openssl-${OPENSSL_VER}.tar.gz
-NOSCRIPT_PACKAGE=noscript_security_suite-2.6.8.13-sm+fx+fn.xpi
+GMP_PACKAGE=gmp-${GMP_VER}.tar.bz2
+NOSCRIPT_PACKAGE=noscript_security_suite-2.6.8.17-fx+sm+fn.xpi
 TOOLCHAIN4_PACKAGE=x86_64-apple-darwin10.tar.xz
+TOOLCHAIN4_OLD_PACKAGE=multiarch-darwin11-cctools127.2-gcc42-5666.3-llvmgcc42-2336.1-Linux-120724.tar.xz
 OSXSDK_PACKAGE=apple-uni-sdk-10.6_20110407-0.flosoft1_i386.deb
 MINGW_PACKAGE=mingw-w64-svn-snapshot.zip
 MSVCR100_PACKAGE=msvcr100.dll
@@ -55,10 +63,12 @@ SETUPTOOLS_PACKAGE=setuptools-${SETUPTOOLS_VER}.tar.gz
 GO_PACKAGE=go${GO_VER}.src.tar.gz
 
 # Hashes for packages with weak sigs or no sigs
-OPENSSL_HASH=6cc2a80b17d64de6b7bac985745fdaba971d54ffd7d38d3556f998d7c0c9cb5a
+OPENSSL_HASH=53cb818c3b90e507a8348f4f5eaedb05d8bfe5358aabb508b7263cc670c3e028
+GMP_HASH=752079520b4690531171d0f4532e40f08600215feefede70b24fabdc6f1ab160
 OSXSDK_HASH=6602d8d5ddb371fbc02e2a5967d9bd0cd7358d46f9417753c8234b923f2ea6fc
 TOOLCHAIN4_HASH=7b71bfe02820409b994c5c33a7eab81a81c72550f5da85ff7af70da3da244645
-NOSCRIPT_HASH=0d90f283ee9e3be5bb1ebc315fab12994ff5a15380bd3a2fdff62750286b4ea1
+TOOLCHAIN4_OLD_HASH=65c1b2d302358a6b95a26c6828a66908a199276193bb0b268f2dcc1a997731e9
+NOSCRIPT_HASH=8d3246153054c92f850ea8a85b19a2e493a17979751087e4c7bf11f4056282f1
 MINGW_HASH=a5b03d0448a309341be4cf34c6ad3016d04c89952dca5243254b4d6c738b164f
 MSVCR100_HASH=1221a09484964a6f38af5e34ee292b9afefccb3dc6e55435fd3aaf7c235d9067
 PYCRYPTO_HASH=f2ce1e989b272cfcb677616763e0a2e7ec659effa67a88aa92b3a65528f60a3c
@@ -72,7 +82,9 @@ GO_HASH=9ab83fb8eafe39f4204ef0f8e84e5ff7e8f1d533ddb05f51e6dc81503e8c0ae4
 
 ## Non-git package URLs
 OPENSSL_URL=https://www.openssl.org/source/${OPENSSL_PACKAGE}
+GMP_URL=https://ftp.gnu.org/gnu/gmp/${GMP_PACKAGE}
 TOOLCHAIN4_URL=https://people.torproject.org/~mikeperry/mirrors/sources/${TOOLCHAIN4_PACKAGE}
+TOOLCHAIN4_OLD_URL=https://people.torproject.org/~mikeperry/mirrors/sources/${TOOLCHAIN4_OLD_PACKAGE}
 OSXSDK_URL=https://launchpad.net/~flosoft/+archive/cross-apple/+files/${OSXSDK_PACKAGE}
 BINUTILS_URL=https://ftp.gnu.org/gnu/binutils/${BINUTILS_PACKAGE}
 GCC_URL=https://ftp.gnu.org/gnu/gcc/gcc-${GCC_VER}/${GCC_PACKAGE}

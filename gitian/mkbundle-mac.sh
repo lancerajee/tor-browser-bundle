@@ -32,6 +32,11 @@ then
   export NUM_PROCS=2
 fi
 
+if [ -z "$VM_MEMORY" ];
+then
+  export VM_MEMORY=2000
+fi
+
 ./make-vms.sh
 
 cd $GITIAN_DIR
@@ -51,13 +56,20 @@ $WRAPPER_DIR/build-helpers/dzip.sh $GITIAN_DIR/inputs/relativelink-src.zip ./Rel
 cd ./Bundle-Data/
 rm -f $GITIAN_DIR/inputs/tbb-docs.zip
 $WRAPPER_DIR/build-helpers/dzip.sh $GITIAN_DIR/inputs/tbb-docs.zip ./Docs/
-cp beta/mac/torrc-defaults-appendix $GITIAN_DIR/inputs/torrc-defaults-appendix-mac
-cp beta/meek-http-helper-user.js $GITIAN_DIR/inputs/
+cp PTConfigs/mac/torrc-defaults-appendix $GITIAN_DIR/inputs/torrc-defaults-appendix-mac
+cp PTConfigs/bridge_prefs.js $GITIAN_DIR/inputs/
+cp PTConfigs/meek-http-helper-user.js $GITIAN_DIR/inputs/
 cp mac-tor.sh $GITIAN_DIR/inputs/
 
 cd mac
 rm -f $GITIAN_DIR/inputs/mac-skeleton.zip
 $WRAPPER_DIR/build-helpers/dzip.sh $GITIAN_DIR/inputs/mac-skeleton.zip .
+cd ../mac-desktop.dmg
+rm -f $GITIAN_DIR/inputs/dmg-desktop.tar.xz
+$WRAPPER_DIR/build-helpers/dtar.sh $GITIAN_DIR/inputs/dmg-desktop.tar.xz .
+cd ../mac-applications.dmg
+rm -f $GITIAN_DIR/inputs/dmg-applications.tar-gz
+$WRAPPER_DIR/build-helpers/dtar.sh $GITIAN_DIR/inputs/dmg-applications.tar.xz .
 
 cd $WRAPPER_DIR
 
@@ -85,7 +97,7 @@ then
   echo "****** Starting Tor Component of Mac Bundle (1/4 for Mac) ******"
   echo 
 
-  ./bin/gbuild -j $NUM_PROCS --commit zlib=$ZLIB_TAG,libevent=$LIBEVENT_TAG,tor=$TOR_TAG $DESCRIPTOR_DIR/mac/gitian-tor.yml
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit zlib=$ZLIB_TAG,libevent=$LIBEVENT_TAG,tor=$TOR_TAG $DESCRIPTOR_DIR/mac/gitian-tor.yml
   if [ $? -ne 0 ];
   then
     #mv var/build.log ./tor-fail-mac.log.`date +%Y%m%d%H%M%S`
@@ -106,7 +118,7 @@ then
   echo "****** Starting TorBrowser Component of Mac Bundle (2/4 for Mac) ******"
   echo 
 
-  ./bin/gbuild -j $NUM_PROCS --commit tor-browser=$TORBROWSER_TAG $DESCRIPTOR_DIR/mac/gitian-firefox.yml
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit tor-browser=$TORBROWSER_TAG $DESCRIPTOR_DIR/mac/gitian-firefox.yml
   if [ $? -ne 0 ];
   then
     #mv var/build.log ./firefox-fail-mac.log.`date +%Y%m%d%H%M%S`
@@ -127,7 +139,7 @@ then
   echo "****** Starting Pluggable Transports Component of Mac Bundle (3/4 for Mac) ******"
   echo 
 
-  ./bin/gbuild -j $NUM_PROCS --commit pyptlib=$PYPTLIB_TAG,obfsproxy=$OBFSPROXY_TAG,flashproxy=$FLASHPROXY_TAG,goptlib=$GOPTLIB_TAG,meek=$MEEK_TAG $DESCRIPTOR_DIR/mac/gitian-pluggable-transports.yml
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit pyptlib=$PYPTLIB_TAG,obfsproxy=$OBFSPROXY_TAG,flashproxy=$FLASHPROXY_TAG,fteproxy=$FTEPROXY_TAG,goptlib=$GOPTLIB_TAG,meek=$MEEK_TAG $DESCRIPTOR_DIR/mac/gitian-pluggable-transports.yml
   if [ $? -ne 0 ];
   then
     #mv var/build.log ./firefox-fail-mac.log.`date +%Y%m%d%H%M%S`
@@ -151,7 +163,7 @@ then
   
   cd $WRAPPER_DIR && ./record-inputs.sh $VERSIONS_FILE && cd $GITIAN_DIR
   
-  ./bin/gbuild -j $NUM_PROCS --commit https-everywhere=$HTTPSE_TAG,torbutton=$TORBUTTON_TAG,tor-launcher=$TORLAUNCHER_TAG,meek=$MEEK_TAG $DESCRIPTOR_DIR/mac/gitian-bundle.yml
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit libdmg-hfsplus=$LIBDMG_TAG,https-everywhere=$HTTPSE_TAG,torbutton=$TORBUTTON_TAG,tor-launcher=$TORLAUNCHER_TAG,meek=$MEEK_TAG $DESCRIPTOR_DIR/mac/gitian-bundle.yml
   if [ $? -ne 0 ];
   then
     #mv var/build.log ./bundle-fail-mac.log.`date +%Y%m%d%H%M%S`
@@ -160,7 +172,7 @@ then
   
   #cp -a build/out/*.dmg $WRAPPER_DIR
   mkdir -p $WRAPPER_DIR/$TORBROWSER_VERSION/
-  cp -a build/out/*.zip $WRAPPER_DIR/$TORBROWSER_VERSION/ || exit 1
+  cp -a build/out/* $WRAPPER_DIR/$TORBROWSER_VERSION/ || exit 1
   touch $GITIAN_DIR/inputs/bundle-mac.gbuilt
 else
   echo 

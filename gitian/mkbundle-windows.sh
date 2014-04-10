@@ -33,6 +33,11 @@ then
   export NUM_PROCS=2
 fi
 
+if [ -z "$VM_MEMORY" ];
+then
+  export VM_MEMORY=2000
+fi
+
 ./make-vms.sh
 
 cd $GITIAN_DIR
@@ -53,8 +58,9 @@ $WRAPPER_DIR/build-helpers/dzip.sh $GITIAN_DIR/inputs/relativelink-src.zip ./Rel
 cd ./Bundle-Data/
 rm -f $GITIAN_DIR/inputs/tbb-docs.zip
 $WRAPPER_DIR/build-helpers/dzip.sh $GITIAN_DIR/inputs/tbb-docs.zip ./Docs/
-cp beta/windows/torrc-defaults-appendix $GITIAN_DIR/inputs/torrc-defaults-appendix-windows
-cp beta/meek-http-helper-user.js $GITIAN_DIR/inputs/
+cp PTConfigs/windows/torrc-defaults-appendix $GITIAN_DIR/inputs/torrc-defaults-appendix-windows
+cp PTConfigs/bridge_prefs.js $GITIAN_DIR/inputs/
+cp PTConfigs/meek-http-helper-user.js $GITIAN_DIR/inputs/
 
 cd windows
 rm -f $GITIAN_DIR/inputs/windows-skeleton.zip
@@ -86,7 +92,7 @@ then
   echo "****** Starting Tor Component of Windows Bundle (1/4 for Windows) ******"
   echo 
 
-  ./bin/gbuild -j $NUM_PROCS --commit zlib=$ZLIB_TAG,libevent=$LIBEVENT_TAG,tor=$TOR_TAG $DESCRIPTOR_DIR/windows/gitian-tor.yml
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit zlib=$ZLIB_TAG,libevent=$LIBEVENT_TAG,tor=$TOR_TAG $DESCRIPTOR_DIR/windows/gitian-tor.yml
   if [ $? -ne 0 ];
   then
     #mv var/build.log ./tor-fail-win32.log.`date +%Y%m%d%H%M%S`
@@ -107,7 +113,7 @@ then
   echo "****** Starting Torbrowser Component of Windows Bundle (2/4 for Windows) ******"
   echo 
 
-  ./bin/gbuild -j $NUM_PROCS --commit tor-browser=$TORBROWSER_TAG $DESCRIPTOR_DIR/windows/gitian-firefox.yml
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit tor-browser=$TORBROWSER_TAG $DESCRIPTOR_DIR/windows/gitian-firefox.yml
   if [ $? -ne 0 ];
   then
     #mv var/build.log ./firefox-fail-win32.log.`date +%Y%m%d%H%M%S`
@@ -128,7 +134,7 @@ then
   echo "****** Starting Pluggable Transports Component of Windows Bundle (3/4 for Windows) ******"
   echo 
 
-  ./bin/gbuild -j $NUM_PROCS --commit pyptlib=$PYPTLIB_TAG,obfsproxy=$OBFSPROXY_TAG,flashproxy=$FLASHPROXY_TAG,goptlib=$GOPTLIB_TAG,meek=$MEEK_TAG $DESCRIPTOR_DIR/windows/gitian-pluggable-transports.yml
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit pyptlib=$PYPTLIB_TAG,obfsproxy=$OBFSPROXY_TAG,flashproxy=$FLASHPROXY_TAG,fteproxy=$FTEPROXY_TAG,goptlib=$GOPTLIB_TAG,meek=$MEEK_TAG $DESCRIPTOR_DIR/windows/gitian-pluggable-transports.yml
   if [ $? -ne 0 ];
   then
     #mv var/build.log ./pluggable-transports-fail-win32.log.`date +%Y%m%d%H%M%S`
@@ -152,7 +158,7 @@ then
   cp -a $WRAPPER_DIR/$VERSIONS_FILE $GITIAN_DIR/inputs/versions
   cd $WRAPPER_DIR && ./record-inputs.sh $VERSIONS_FILE && cd $GITIAN_DIR
   
-  ./bin/gbuild -j $NUM_PROCS --commit https-everywhere=$HTTPSE_TAG,torbutton=$TORBUTTON_TAG,tor-launcher=$TORLAUNCHER_TAG,meek=$MEEK_TAG,tbb-windows-installer=$NSIS_TAG $DESCRIPTOR_DIR/windows/gitian-bundle.yml
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit https-everywhere=$HTTPSE_TAG,torbutton=$TORBUTTON_TAG,tor-launcher=$TORLAUNCHER_TAG,tbb-windows-installer=$NSIS_TAG,meek=$MEEK_TAG $DESCRIPTOR_DIR/windows/gitian-bundle.yml
   if [ $? -ne 0 ];
   then
     #mv var/build.log ./bundle-fail-win32.log.`date +%Y%m%d%H%M%S`
