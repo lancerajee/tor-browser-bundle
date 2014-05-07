@@ -73,9 +73,7 @@ script: |
   export GOPATH="$HOME/go"
   tar xvf go.tar.gz
   cd go/src
-  # https://code.google.com/p/go/issues/detail?id=6940#c6
-  # A PIE build fails on amd64 in cgo tests.
-  DEB_BUILD_HARDENING_PIE=0 ./make.bash
+  ./make.bash
   sudo cp -a ../bin/* /usr/local/bin
   cd ../..
   #
