@@ -12,4 +12,4 @@ ClientTransportPlugin obfs2,obfs3 exec PluggableTransports/obfsproxy.bin managed
 ClientTransportPlugin flashproxy exec PluggableTransports/flashproxy-client --register :0 :9000
 
 ## meek configuration
-ClientTransportPlugin meek exec PluggableTransports/meek-client-torbrowser --log meek-client-torbrowser.log -- PluggableTransports/meek-client --url=https://meek-reflect.appspot.com/ --front=www.google.com --log meek-client.log
+ClientTransportPlugin meek exec PluggableTransports/meek-client-torbrowser -- PluggableTransports/meek-client --url=https://meek-reflect.appspot.com/ --front=www.google.com
