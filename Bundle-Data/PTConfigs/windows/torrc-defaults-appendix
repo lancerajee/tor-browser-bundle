@@ -12,9 +12,4 @@ ClientTransportPlugin obfs2,obfs3 exec Tor\PluggableTransports\obfsproxy managed
 ClientTransportPlugin flashproxy exec Tor\PluggableTransports\flashproxy-client --register :0 :9000
 
 ## meek configuration
-#
-# # The meek bridge address and port are ignored.
-UseBridges 1
-Bridge meek 0.0.2.0:1
-
 ClientTransportPlugin meek exec ./Tor/PluggableTransports/terminateprocess-buffer ./Tor/PluggableTransports/meek-client-torbrowser --exit-on-stdin-eof --log meek-client-torbrowser.log -- ./Tor/PluggableTransports/meek-client --url=https://meek-reflect.appspot.com/ --front=www.google.com --log meek-client.log
