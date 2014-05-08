@@ -5,6 +5,7 @@
 
 MIRROR_URL=https://people.torproject.org/~mikeperry/mirrors/sources/
 MIRROR_URL_DCF=https://people.torproject.org/~dcf/mirrors/sources/
+MIRROR_URL_ASN=https://people.torproject.org/~asn/mirrors/sources/
 set -e
 set -u
 umask 0022
@@ -132,11 +133,12 @@ do
   fi
 done
 
-for i in BINUTILS GCC PYTHON PYCRYPTO M2CRYPTO PYTHON_MSI GMP
+for i in BINUTILS GCC PYTHON PYCRYPTO M2CRYPTO PYTHON_MSI GMP LXML
 do
   PACKAGE="${i}_PACKAGE"
   URL="${i}_URL"
-  if [ "${i}" == "PYTHON" -o "${i}" == "PYCRYPTO" -o "${i}" == "M2CRYPTO" -o "${i}" == "PYTHON_MSI" ]; then
+  if [ "${i}" == "PYTHON" -o "${i}" == "PYCRYPTO" -o "${i}" == "M2CRYPTO" -o \
+       "${i}" == "PYTHON_MSI" -o "${i}" == "LXML" ]; then
     SUFFIX="asc"
   else
     SUFFIX="sig"
@@ -165,6 +167,13 @@ do
   PACKAGE="${i}_PACKAGE"
   URL="${MIRROR_URL_DCF}${!PACKAGE}"
   get "${!PACKAGE}" "${MIRROR_URL_DCF}${!PACKAGE}"
+done
+
+for i in PYYAML
+do
+  PACKAGE="${i}_PACKAGE"
+  URL="${MIRROR_URL_ASN}${!PACKAGE}"
+  get "${!PACKAGE}" "${MIRROR_URL_ASN}${!PACKAGE}"
 done
 
 for i in ZOPEINTERFACE TWISTED PY2EXE SETUPTOOLS
@@ -197,8 +206,9 @@ done
 
 cd ..
 
-# NoScript and PDF.JS are magikal and special:
+# NoScript and HTTPS-Everywhere are magikal and special:
 wget -U "" -N ${NOSCRIPT_URL}
+wget -U "" -N ${HTTPSE_URL}
 
 # So is mingw:
 if [ ! -f mingw-w64-svn-snapshot.zip ];
@@ -217,7 +227,7 @@ fi
 
 # Verify packages with weak or no signatures via direct sha256 check
 # (OpenSSL is signed with MD5, and OSXSDK is not signed at all)
-for i in OSXSDK TOOLCHAIN4 TOOLCHAIN4_OLD NOSCRIPT MINGW MSVCR100 PYCRYPTO ARGPARSE ZOPEINTERFACE TWISTED M2CRYPTO SETUPTOOLS OPENSSL GMP GO
+for i in OSXSDK TOOLCHAIN4 TOOLCHAIN4_OLD NOSCRIPT HTTPSE MINGW MSVCR100 PYCRYPTO ARGPARSE PYYAML ZOPEINTERFACE TWISTED M2CRYPTO SETUPTOOLS OPENSSL GMP GO
 do
    PACKAGE="${i}_PACKAGE"
    HASH="${i}_HASH"
@@ -253,6 +263,7 @@ done
 cd ..
 
 ln -sf "$NOSCRIPT_PACKAGE" noscript@noscript.net.xpi
+ln -sf "$HTTPSE_PACKAGE" https-everywhere@eff.org.xpi
 ln -sf "$OPENSSL_PACKAGE" openssl.tar.gz
 ln -sf "$BINUTILS_PACKAGE" binutils.tar.bz2
 ln -sf "$GCC_PACKAGE" gcc.tar.bz2
@@ -260,12 +271,14 @@ ln -sf "$PYTHON_PACKAGE" python.tar.bz2
 ln -sf "$PYTHON_MSI_PACKAGE" python.msi
 ln -sf "$PYCRYPTO_PACKAGE" pycrypto.tar.gz
 ln -sf "$ARGPARSE_PACKAGE" argparse.tar.gz
+ln -sf "$PYYAML_PACKAGE" pyyaml.tar.gz
 ln -sf "$ZOPEINTERFACE_PACKAGE" zope.interface.zip
 ln -sf "$TWISTED_PACKAGE" twisted.tar.bz2
 ln -sf "$M2CRYPTO_PACKAGE" m2crypto.tar.gz
 ln -sf "$PY2EXE_PACKAGE" py2exe.exe
 ln -sf "$SETUPTOOLS_PACKAGE" setuptools.tar.gz
 ln -sf "$GMP_PACKAGE" gmp.tar.bz2
+ln -sf "$LXML_PACKAGE" lxml.tar.gz
 ln -sf "$GO_PACKAGE" go.tar.gz
 
 # Fetch latest gitian-builder itself
@@ -289,13 +302,13 @@ https-everywhere      https://git.torproject.org/https-everywhere.git $HTTPSE_TA
 torbutton             https://git.torproject.org/torbutton.git            $TORBUTTON_TAG
 tor-launcher          https://git.torproject.org/tor-launcher.git         $TORLAUNCHER_TAG
 tor-browser           https://git.torproject.org/tor-browser.git          $TORBROWSER_TAG
-pyptlib               https://git.torproject.org/pluggable-transports/pyptlib.git
-obfsproxy             https://git.torproject.org/pluggable-transports/obfsproxy.git
-flashproxy            https://git.torproject.org/flashproxy.git
-fteproxy              https://github.com/kpdyer/fteproxy.git
+pyptlib               https://git.torproject.org/pluggable-transports/pyptlib.git $PYPTLIB_TAG
+obfsproxy https://git.torproject.org/pluggable-transports/obfsproxy.git $OBFSPROXY_TAG
+flashproxy            https://git.torproject.org/flashproxy.git $FLASHPROXY_TAG
+fteproxy              https://github.com/kpdyer/fteproxy.git $FTEPROXY_TAG
 libdmg-hfsplus        https://github.com/vasi/libdmg-hfsplus.git $LIBDMG_TAG
-goptlib               https://git.torproject.org/pluggable-transports/goptlib.git
-meek                  https://git.torproject.org/pluggable-transports/meek.git
+goptlib               https://git.torproject.org/pluggable-transports/goptlib.git $GOPTLIB_TAG
+meek                  https://git.torproject.org/pluggable-transports/meek.git $MEEK_TAG
 EOF
 
 exit 0

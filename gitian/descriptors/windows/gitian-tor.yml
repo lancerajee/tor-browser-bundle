@@ -30,6 +30,8 @@ files:
 - "bug11156.patch"
 - "bug11200.patch"
 - "bug11069.patch"
+- "bug9665.patch"
+- "bug8402.patch"
 - "binutils.tar.bz2"
 - "dzip.sh"
 - "openssl.tar.gz"
@@ -97,14 +99,16 @@ script: |
     git am ~/build/bug10297.patch
   fi
   if [ $BUILD_PT_BUNDLES ]; then
-    git am ~/build/bug9229.patch
     if [ ${TOR_TAG::9} == "tor-0.2.4" ];
     then
+      git am ~/build/bug9229.patch
       git am ~/build/bug5018.patch
       git am ~/build/bug11069.patch
       git am ~/build/bug11156.patch
+      git am ~/build/bug9665.patch
+      git am ~/build/bug11200.patch
+      git am ~/build/bug8402.patch
     fi
-    git am ~/build/bug11200.patch
   fi
   mkdir -p $OUTDIR/src
   git archive HEAD | tar -x -C $OUTDIR/src
