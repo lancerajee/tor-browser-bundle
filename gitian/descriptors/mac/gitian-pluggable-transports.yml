@@ -214,8 +214,8 @@ script: |
   CGO_ENABLED=1 CC="$CC $CFLAGS $LDFLAGS" go build
   cp -a meek-client-torbrowser $PTDIR
   cd ..
-  mkdir -p $INSTDIR/Docs/meek
-  cp -a README doc/*.1 $INSTDIR/Docs/meek
+  mkdir -p $INSTDIR/TorBrowserBundle.app/Docs/meek
+  cp -a README doc/*.1 $INSTDIR/TorBrowserBundle.app/Docs/meek
   cd ..
   #
   cd $INSTDIR
