@@ -179,7 +179,10 @@ script: |
   cd meek-client-torbrowser
   go build
   cp -a meek-client-torbrowser $PTDIR
-  cd ../..
+  cd ..
+  mkdir -p $INSTDIR/Docs/meek
+  cp -a README doc/*.1 $INSTDIR/Docs/meek
+  cd ..
   #
   cd $INSTDIR
   #

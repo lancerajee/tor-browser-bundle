@@ -289,7 +289,10 @@ script: |
   cd terminateprocess-buffer
   CGO_ENABLED=1 CC="i686-w64-mingw32-gcc" go build
   cp -a terminateprocess-buffer.exe $PTDIR
-  cd ../..
+  cd ..
+  mkdir -p $INSTDIR/Docs/meek
+  cp -a README doc/*.1.txt $INSTDIR/Docs/meek
+  cd ..
   #
   # http://bugs.winehq.org/show_bug.cgi?id=3591
   cp -a $INSTDIR/python/python27.dll $PTDIR/
