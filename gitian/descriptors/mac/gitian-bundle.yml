@@ -38,6 +38,7 @@ files:
 - "torrc-defaults-appendix-mac"
 - "bridge_prefs.js"
 - "meek-http-helper-user.js"
+- "TorBrowser.app.meek-http-helper.zip"
 - "relativelink-src.zip"
 - "mac-skeleton.zip"
 - "dmg-applications.tar.xz"
@@ -47,6 +48,7 @@ files:
 - "https-everywhere@eff.org.xpi"
 - "dzip.sh"
 - "ddmg.sh"
+- "background-plist.py"
 - "libdmg.patch"
 - "bare-version"
 - "bundle.inputs"
@@ -168,6 +170,15 @@ script: |
   # Set the locale of the bundle.
   echo "pref(\"general.useragent.locale\", \"en-US\");" >> defaults/preferences/000-tor-browser.js
   zip -Xm omni.ja defaults/preferences/000-tor-browser.js
+  popd
+  # Install a headless copy of TorBrowser.app, with a modified Info.plist so
+  # that it runs without a dock icon. See #11429.
+  pushd $TORBROWSER_NAME.app/Contents/MacOS
+  mkdir -p TorBrowser.app.meek-http-helper/Contents
+  (cd TorBrowser.app.meek-http-helper/Contents && ln -s ../../TorBrowser.app/Contents/* .)
+  rm -f TorBrowser.app.meek-http-helper/Contents/Info.plist
+  ~/build/background-plist.py TorBrowser.app/Contents/Info.plist > TorBrowser.app.meek-http-helper/Contents/Info.plist
+  unzip ~/build/TorBrowser.app.meek-http-helper.zip
   popd
   #
   if [ ${TORBROWSER_VERSION::3} == "3.5" ]; then
