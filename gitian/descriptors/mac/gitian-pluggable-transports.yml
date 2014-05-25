@@ -98,8 +98,8 @@ script: |
   # Disable CC et al. that are set up for cross builds. (The Go compiler is a
   # cross-compiler, but it needs to run on *this* host.)
   CC= CFLAGS= LDFLAGS= LDSHARED= ./make.bash
-  sudo cp -a ../bin/* /usr/local/bin
   cd ../..
+  export PATH="$PATH:$PWD/go/bin"
   #
   cd pyptlib
   find -type f | xargs touch --date="$REFERENCE_DATETIME"

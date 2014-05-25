@@ -75,8 +75,8 @@ script: |
   tar xvf go.tar.gz
   cd go/src
   ./make.bash
-  sudo cp -a ../bin/* /usr/local/bin
   cd ../..
+  export PATH="$PATH:$PWD/go/bin"
   #
   cd pyptlib
   find -type f | xargs touch --date="$REFERENCE_DATETIME"

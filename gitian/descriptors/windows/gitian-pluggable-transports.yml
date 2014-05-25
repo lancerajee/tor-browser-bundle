@@ -152,8 +152,8 @@ script: |
   patch -p1 < ~/build/cross-cgo.patch
   cd src
   ./make.bash
-  sudo cp -a ../bin/* /usr/local/bin
   cd ../..
+  export PATH="$PATH:$PWD/go/bin"
   #
   tar xzf setuptools.tar.gz
   cd setuptools-*
