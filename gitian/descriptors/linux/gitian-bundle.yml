@@ -92,6 +92,8 @@ script: |
   # XXX: Bloody hack to workaround a bug in HTTPS_E's git hash extraction in
   # makexpi.sh. See https://trac.torproject.org/projects/tor/ticket/10066
   rm -f .git/refs/heads/master
+  # Backport the fix for #11630 from HTTPS-Everywhere trunk.
+  sed 's/conn.commit()/&\nconn.execute("VACUUM")/' -i utils/make-sqlite.py
   ./makexpi.sh
   cp pkg/*.xpi ../tor-browser/Data/Browser/profile.default/extensions/https-everywhere@eff.org.xpi
   cd ..
