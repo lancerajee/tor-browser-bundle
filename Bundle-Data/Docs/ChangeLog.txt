@@ -1,4 +1,4 @@
-Tor Browser Bundle 3.6.2 -- Jun 6 2014
+Tor Browser Bundle 3.6.2 -- Jun 9 2014
  * All Platforms
    * Update Firefox to 24.6.0esr
    * Update OpenSSL to 1.0.1h
@@ -26,7 +26,6 @@ Tor Browser Bundle 3.6.2 -- Jun 6 2014
    * Bug 12212: Disable deprecated webaudio API
    * Bug 11253: Turn on TLS 1.1 and 1.2.
    * Bug 11817: Don't send startup time information to Mozilla.
-   * Bug 11630: Make HTTPS-Everywhere 3.5's rules.sqlite deterministic.
 
 Tor Browser Bundle 3.6.1 -- May 6 2014
  * All Platforms
