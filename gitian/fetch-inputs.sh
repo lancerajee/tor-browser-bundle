@@ -44,6 +44,8 @@ cd "$INPUTS_DIR"
 CLEANUP=$(tempfile)
 trap "bash '$CLEANUP'; rm -f '$CLEANUP'" EXIT
 
+# FIXME: This code is copied to verify-tags.sh.. Should we make a bash
+# function library?
 verify() {
   local file="$1"; shift
   local keyring="$1"; shift
@@ -88,7 +90,7 @@ update_git() {
 
   if [ -d "$dir/.git" ];
   then
-    (cd "$dir" && git fetch origin && git fetch --tags origin)
+    (cd "$dir" && git remote set-url origin $url && git fetch --prune origin && git fetch --prune --tags origin)
   else
     if ! git clone "$url"; then
       echo >&2 "Error: Cloning $url failed"
@@ -176,7 +178,7 @@ do
   get "${!PACKAGE}" "${MIRROR_URL_ASN}${!PACKAGE}"
 done
 
-for i in ZOPEINTERFACE TWISTED PY2EXE SETUPTOOLS
+for i in ZOPEINTERFACE TWISTED PY2EXE SETUPTOOLS PARSLEY
 do
   URL="${i}_URL"
   PACKAGE="${i}_PACKAGE"
@@ -206,9 +208,8 @@ done
 
 cd ..
 
-# NoScript and HTTPS-Everywhere are magikal and special:
+# NoScript is magikal and special:
 wget -U "" -N ${NOSCRIPT_URL}
-wget -U "" -N ${HTTPSE_URL}
 
 # So is mingw:
 if [ ! -f mingw-w64-svn-snapshot.zip ];
@@ -227,7 +228,7 @@ fi
 
 # Verify packages with weak or no signatures via direct sha256 check
 # (OpenSSL is signed with MD5, and OSXSDK is not signed at all)
-for i in OSXSDK TOOLCHAIN4 TOOLCHAIN4_OLD NOSCRIPT HTTPSE MINGW MSVCR100 PYCRYPTO ARGPARSE PYYAML ZOPEINTERFACE TWISTED M2CRYPTO SETUPTOOLS OPENSSL GMP GO
+for i in OSXSDK TOOLCHAIN4 TOOLCHAIN4_OLD NOSCRIPT MINGW MSVCR100 PYCRYPTO ARGPARSE PYYAML ZOPEINTERFACE TWISTED M2CRYPTO SETUPTOOLS OPENSSL GMP PARSLEY GO
 do
    PACKAGE="${i}_PACKAGE"
    HASH="${i}_HASH"
@@ -263,7 +264,6 @@ done
 cd ..
 
 ln -sf "$NOSCRIPT_PACKAGE" noscript@noscript.net.xpi
-ln -sf "$HTTPSE_PACKAGE" https-everywhere@eff.org.xpi
 ln -sf "$OPENSSL_PACKAGE" openssl.tar.gz
 ln -sf "$BINUTILS_PACKAGE" binutils.tar.bz2
 ln -sf "$GCC_PACKAGE" gcc.tar.bz2
@@ -279,6 +279,7 @@ ln -sf "$PY2EXE_PACKAGE" py2exe.exe
 ln -sf "$SETUPTOOLS_PACKAGE" setuptools.tar.gz
 ln -sf "$GMP_PACKAGE" gmp.tar.bz2
 ln -sf "$LXML_PACKAGE" lxml.tar.gz
+ln -sf "$PARSLEY_PACKAGE" parsley.tar.gz
 ln -sf "$GO_PACKAGE" go.tar.gz
 
 # Fetch latest gitian-builder itself
@@ -287,8 +288,8 @@ cd ..
 git remote set-url origin https://git.torproject.org/builders/gitian-builder.git
 git fetch origin
 git fetch --tags origin # XXX - why do we fetch tags specifically?
-git checkout tor-browser-builder-2
-git merge origin/tor-browser-builder-2
+git checkout tor-browser-builder-3
+git merge origin/tor-browser-builder-3
 cd inputs
 
 while read dir url tag; do
@@ -305,8 +306,10 @@ tor-browser           https://git.torproject.org/tor-browser.git          $TORBR
 pyptlib               https://git.torproject.org/pluggable-transports/pyptlib.git $PYPTLIB_TAG
 obfsproxy https://git.torproject.org/pluggable-transports/obfsproxy.git $OBFSPROXY_TAG
 flashproxy            https://git.torproject.org/flashproxy.git $FLASHPROXY_TAG
+libfte                https://github.com/kpdyer/libfte.git $LIBFTE_TAG
 fteproxy              https://github.com/kpdyer/fteproxy.git $FTEPROXY_TAG
 libdmg-hfsplus        https://github.com/vasi/libdmg-hfsplus.git $LIBDMG_TAG
+txsocksx              https://github.com/habnabit/txsocksx.git $TXSOCKSX_TAG
 goptlib               https://git.torproject.org/pluggable-transports/goptlib.git $GOPTLIB_TAG
 meek                  https://git.torproject.org/pluggable-transports/meek.git $MEEK_TAG
 EOF

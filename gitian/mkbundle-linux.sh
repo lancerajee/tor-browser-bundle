@@ -66,6 +66,13 @@ $WRAPPER_DIR/build-helpers/dzip.sh $GITIAN_DIR/inputs/linux-skeleton.zip .
 
 cd $WRAPPER_DIR
 
+# FIXME: Library function?
+die_msg() {
+  local msg="$1"; shift
+  printf "\n\n$msg\n"
+  exit 1
+}
+
 # Let's preserve the original $FOO for creating proper symlinks after building
 # the utils both if we verify tags and if we don't.
 
@@ -73,7 +80,7 @@ LIBEVENT_TAG_ORIG=$LIBEVENT_TAG
 
 if [ "z$VERIFY_TAGS" = "z1" ];
 then
-  ./verify-tags.sh $GITIAN_DIR/inputs $VERSIONS_FILE || exit 1
+  ./verify-tags.sh $GITIAN_DIR/inputs $VERSIONS_FILE || die_msg "You should run 'make prep' to ensure your inputs are up to date"
   # If we're verifying tags, be explicit to gitian that we
   # want to build from tags.
   NSIS_TAG=refs/tags/$NSIS_TAG
@@ -85,18 +92,23 @@ then
   HTTPSE_TAG=refs/tags/$HTTPSE_TAG
   ZLIB_TAG=refs/tags/$ZLIB_TAG
   LIBEVENT_TAG=refs/tags/$LIBEVENT_TAG
+  PYPTLIB_TAG=refs/tags/$PYPTLIB_TAG
+  OBFSPROXY_TAG=refs/tags/$OBFSPROXY_TAG
+  FLASHPROXY_TAG=refs/tags/$FLASHPROXY_TAG
 fi
 
 cd $GITIAN_DIR
 
 if [ ! -f inputs/openssl-$OPENSSL_VER-linux32-utils.zip -o \
      ! -f inputs/openssl-$OPENSSL_VER-linux64-utils.zip -o \
-     ! -f inputs/libevent-${LIBEVENT_TAG_ORIG:8:6}-linux32-utils.zip -o \
-     ! -f inputs/libevent-${LIBEVENT_TAG_ORIG:8:6}-linux64-utils.zip -o \
+     ! -f inputs/libevent-${LIBEVENT_TAG_ORIG#release-}-linux32-utils.zip -o \
+     ! -f inputs/libevent-${LIBEVENT_TAG_ORIG#release-}-linux64-utils.zip -o \
      ! -f inputs/python-$PYTHON_VER-linux32-utils.zip -o \
      ! -f inputs/python-$PYTHON_VER-linux64-utils.zip -o \
      ! -f inputs/lxml-$LXML_VER-linux32-utils.zip -o \
-     ! -f inputs/lxml-$LXML_VER-linux64-utils.zip ];
+     ! -f inputs/lxml-$LXML_VER-linux64-utils.zip -o \
+     ! -f inputs/gmp-$GMP_VER-linux32-utils.zip -o \
+     ! -f inputs/gmp-$GMP_VER-linux64-utils.zip ];
 then
   echo
   echo "****** Starting Utilities Component of Linux Bundle (1/5 for Linux) ******"
@@ -105,7 +117,7 @@ then
   ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit libevent=$LIBEVENT_TAG $DESCRIPTOR_DIR/linux/gitian-utils.yml
   if [ $? -ne 0 ];
   then
-    #mv var/build.log ./tor-fail-linux.log.`date +%Y%m%d%H%M%S`
+    #mv var/build.log ./utils-fail-linux.log.`date +%Y%m%d%H%M%S`
     exit 1
   fi
 
@@ -113,15 +125,16 @@ then
   cp -a ../build/out/*-utils.zip .
   ln -sf openssl-$OPENSSL_VER-linux32-utils.zip openssl-linux32-utils.zip
   ln -sf openssl-$OPENSSL_VER-linux64-utils.zip openssl-linux64-utils.zip
-  # TODO: It is not guaranteed we have a X.X.XX-style version.
-  ln -sf libevent-${LIBEVENT_TAG_ORIG:8:6}-linux32-utils.zip libevent-linux32-utils.zip
-  ln -sf libevent-${LIBEVENT_TAG_ORIG:8:6}-linux64-utils.zip libevent-linux64-utils.zip
+  ln -sf libevent-${LIBEVENT_TAG_ORIG#release-}-linux32-utils.zip libevent-linux32-utils.zip
+  ln -sf libevent-${LIBEVENT_TAG_ORIG#release-}-linux64-utils.zip libevent-linux64-utils.zip
   ln -sf python-$PYTHON_VER-linux32-utils.zip python-linux32-utils.zip
   ln -sf python-$PYTHON_VER-linux64-utils.zip python-linux64-utils.zip
   ln -sf lxml-$LXML_VER-linux32-utils.zip lxml-linux32-utils.zip
   ln -sf lxml-$LXML_VER-linux64-utils.zip lxml-linux64-utils.zip
+  ln -sf gmp-$GMP_VER-linux32-utils.zip gmp-linux32-utils.zip
+  ln -sf gmp-$GMP_VER-linux64-utils.zip gmp-linux64-utils.zip
   cd ..
-  #cp -a result/tor-linux-res.yml $GITIAN_DIR/inputs/
+  #cp -a result/utils-linux-res.yml inputs/
 else
   echo
   echo "****** SKIPPING already built Utilities Component of Linux Bundle (1/5 for Linux) ******"
@@ -131,13 +144,14 @@ else
   cd inputs
   ln -sf openssl-$OPENSSL_VER-linux32-utils.zip openssl-linux32-utils.zip
   ln -sf openssl-$OPENSSL_VER-linux64-utils.zip openssl-linux64-utils.zip
-  # TODO: It is not guaranteed we have a X.X.XX-style version.
-  ln -sf libevent-${LIBEVENT_TAG_ORIG:8:6}-linux32-utils.zip libevent-linux32-utils.zip
-  ln -sf libevent-${LIBEVENT_TAG_ORIG:8:6}-linux64-utils.zip libevent-linux64-utils.zip
+  ln -sf libevent-${LIBEVENT_TAG_ORIG#release-}-linux32-utils.zip libevent-linux32-utils.zip
+  ln -sf libevent-${LIBEVENT_TAG_ORIG#release-}-linux64-utils.zip libevent-linux64-utils.zip
   ln -sf python-$PYTHON_VER-linux32-utils.zip python-linux32-utils.zip
   ln -sf python-$PYTHON_VER-linux64-utils.zip python-linux64-utils.zip
   ln -sf lxml-$LXML_VER-linux32-utils.zip lxml-linux32-utils.zip
   ln -sf lxml-$LXML_VER-linux64-utils.zip lxml-linux64-utils.zip
+  ln -sf gmp-$GMP_VER-linux32-utils.zip gmp-linux32-utils.zip
+  ln -sf gmp-$GMP_VER-linux64-utils.zip gmp-linux64-utils.zip
   cd ..
 fi
 
@@ -157,7 +171,7 @@ then
 
   cp -a build/out/tor-linux*-gbuilt.zip inputs/
   cp -a build/out/tor-linux*-debug.zip inputs/
-  #cp -a result/tor-linux-res.yml $GITIAN_DIR/inputs/
+  #cp -a result/tor-linux-res.yml inputs/
 else
   echo
   echo "****** SKIPPING already built Tor Component of Linux Bundle (2/5 for Linux) ******"
@@ -181,7 +195,7 @@ then
 
   cp -a build/out/tor-browser-linux*-gbuilt.zip inputs/
   cp -a build/out/tor-browser-linux*-debug.zip inputs/
-  #cp -a result/torbrowser-linux-res.yml $GITIAN_DIR/inputs/
+  #cp -a result/torbrowser-linux-res.yml inputs/
 else
   echo
   echo "****** SKIPPING already built TorBrowser Component of Linux Bundle (3/5 for Linux) ******"
@@ -195,7 +209,7 @@ then
   echo "****** Starting Pluggable Transports Component of Linux Bundle (4/5 for Linux) ******"
   echo
 
-  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit pyptlib=$PYPTLIB_TAG,obfsproxy=$OBFSPROXY_TAG,flashproxy=$FLASHPROXY_TAG,fteproxy=$FTEPROXY_TAG,goptlib=$GOPTLIB_TAG,meek=$MEEK_TAG $DESCRIPTOR_DIR/linux/gitian-pluggable-transports.yml
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit pyptlib=$PYPTLIB_TAG,obfsproxy=$OBFSPROXY_TAG,flashproxy=$FLASHPROXY_TAG,libfte=$LIBFTE_TAG,fteproxy=$FTEPROXY_TAG,txsocksx=$TXSOCKSX_TAG,goptlib=$GOPTLIB_TAG,meek=$MEEK_TAG $DESCRIPTOR_DIR/linux/gitian-pluggable-transports.yml
   if [ $? -ne 0 ];
   then
     #mv var/build.log ./pluggable-transports-fail-linux.log.`date +%Y%m%d%H%M%S`
@@ -204,7 +218,7 @@ then
 
   cp -a build/out/pluggable-transports-linux*-gbuilt.zip inputs/
   cp -a build/out/pluggable-transports-linux*-debug.zip inputs/
-  #cp -a result/pluggable-transports-linux-res.yml $GITIAN_DIR/inputs/
+  #cp -a result/pluggable-transports-linux-res.yml inputs/
 else
   echo
   echo "****** SKIPPING already built Pluggable Transports Component of Linux Bundle (4/5 for Linux) ******"

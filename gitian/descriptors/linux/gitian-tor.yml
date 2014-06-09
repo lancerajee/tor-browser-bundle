@@ -24,12 +24,12 @@ files:
 - "versions"
 - "bug10297.patch"
 - "bug5018.patch"
-- "bug9229.patch"
 - "bug11156.patch"
 - "bug11200.patch"
 - "bug11069.patch"
 - "bug9665.patch"
 - "bug8402.patch"
+- "bug8402-master.patch"
 - "dzip.sh"
 - "openssl-linux32-utils.zip"
 - "openssl-linux64-utils.zip"
@@ -43,14 +43,14 @@ script: |
   export TZ=UTC
   export LC_ALL=C
   umask 0022
-  #
+
   # Config options for hardening-wrapper
   export DEB_BUILD_HARDENING=1
   export DEB_BUILD_HARDENING_STACKPROTECTOR=1
   export DEB_BUILD_HARDENING_FORTIFY=1
   export DEB_BUILD_HARDENING_FORMAT=1
   export DEB_BUILD_HARDENING_PIE=1
-  #
+
   mkdir -p $INSTDIR/Data/Tor/
   mkdir -p $INSTDIR/Tor/
   mkdir -p $INSTDIR/Debug/Tor/
@@ -59,9 +59,9 @@ script: |
   cp $INSTDIR/openssl/lib/libssl.so.1.0.0 $INSTDIR/Tor/
   cp $INSTDIR/openssl/lib/libcrypto.so.1.0.0 $INSTDIR/Tor/
   cp $INSTDIR/libevent/lib/libevent-2.0.so.5 $INSTDIR/Tor/
-  #
   chmod 700 $INSTDIR/Tor/*so*
-  #
+
+  # Building tor
   cd tor
   git update-index --refresh -q
   export GIT_COMMITTER_NAME="nobody"
@@ -74,13 +74,14 @@ script: |
   if [ $BUILD_PT_BUNDLES ]; then
     if [ ${TOR_TAG::9} == "tor-0.2.4" ];
     then
-      git am ~/build/bug9229.patch
       git am ~/build/bug5018.patch
       git am ~/build/bug11069.patch
       git am ~/build/bug11156.patch
       git am ~/build/bug9665.patch
       git am ~/build/bug11200.patch
       git am ~/build/bug8402.patch
+    else
+      git am ~/build/bug8402-master.patch
     fi
   fi
   mkdir -p $OUTDIR/src
@@ -91,6 +92,7 @@ script: |
   make $MAKEOPTS
   make install
   cp $INSTDIR/share/tor/geoip $INSTDIR/Data/Tor/
+  cp $INSTDIR/share/tor/geoip6 $INSTDIR/Data/Tor/
   # Strip and generate debuginfo for libs
   cd $INSTDIR
   objcopy --only-keep-debug $INSTDIR/bin/tor $INSTDIR/Debug/Tor/tor
@@ -103,7 +105,8 @@ script: |
     strip $INSTDIR/Tor/$LIB
     objcopy --add-gnu-debuglink=./Debug/Tor/$LIB $INSTDIR/Tor/$LIB
   done
-  #
+
+  # Grabbing the results
   ~/build/dzip.sh tor-linux$GBUILD_BITS-gbuilt.zip Data/ Tor/
   ~/build/dzip.sh tor-linux$GBUILD_BITS-debug.zip Debug/
   cp tor-linux$GBUILD_BITS-gbuilt.zip $OUTDIR/

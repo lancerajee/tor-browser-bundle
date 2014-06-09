@@ -4,7 +4,7 @@ suites:
 - "precise"
 architectures:
 - "i386"
-packages: 
+packages:
 - "git-core"
 - "unzip"
 - "zip"
@@ -14,7 +14,6 @@ packages:
 - "python-dev"
 - "faketime"
 - "libtool"
-#- "libssl0.9.8"
 reference_datetime: "2000-01-01 00:00:00"
 remotes:
 - "url": "https://git.torproject.org/pluggable-transports/pyptlib.git"
@@ -23,70 +22,61 @@ remotes:
   "dir": "obfsproxy"
 - "url": "https://git.torproject.org/flashproxy.git"
   "dir": "flashproxy"
+- "url": "https://github.com/kpdyer/libfte.git"
+  "dir": "libfte"
 - "url": "https://github.com/kpdyer/fteproxy.git"
   "dir": "fteproxy"
+- "url": "https://github.com/habnabit/txsocksx.git"
+  "dir": "txsocksx"
 - "url": "https://git.torproject.org/pluggable-transports/goptlib.git"
   "dir": "goptlib"
 - "url": "https://git.torproject.org/pluggable-transports/meek.git"
   "dir": "meek"
 files:
-- "openssl.tar.gz"
-- "gmp.tar.bz2"
 - "pycrypto.tar.gz"
 - "argparse.tar.gz"
 - "pyyaml.tar.gz"
 - "zope.interface.zip"
 - "twisted.tar.bz2"
 - "m2crypto.tar.gz"
+- "parsley.tar.gz"
 - "go.tar.gz"
 - "cross-cgo.patch"
 - "apple-uni-sdk-10.6_20110407-0.flosoft1_i386.deb"
 - "multiarch-darwin11-cctools127.2-gcc42-5666.3-llvmgcc42-2336.1-Linux-120724.tar.xz"
 - "dzip.sh"
-#- "apple-x86-gcc_4.2.1~5646.1flosoft2_i386.deb"
-#- "apple-x86-odcctools_758.159-0flosoft11_i386.deb"
+- "gmp-mac32-utils.zip"
+- "openssl-mac32-utils.zip"
 script: |
   INSTDIR="$HOME/install"
   PTDIR="$INSTDIR/TorBrowserBundle.app/Tor/PluggableTransports"
-  export LIBRARY_PATH="$INSTDIR/lib"
   export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
   export FAKETIME=$REFERENCE_DATETIME
   export TZ=UTC
   export LC_ALL=C
   umask 0022
   #
-  #export CFLAGS="-isysroot /usr/lib/apple/SDKs/MacOSX10.6.sdk/"
-  #export CXXFLAGS=$CFLAGS
-  #export LDFLAGS=$CFLAGS
-  export PATH="$PATH:/usr/apple-osx/bin/"
-  export AR=/usr/apple-osx/bin/i686-apple-darwin11-ar
-  export CC=/usr/apple-osx/bin/i686-apple-darwin11-gcc
-  export CXX=/usr/apple-osx/bin/i686-apple-darwin11-g++
-  # http://bugs.python.org/issue9437
-  export LDSHARED="$CC -pthread -shared"
-  export CFLAGS="-I/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/include/ -I/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/ -I.  -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/ -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/system/ -F/usr/lib/apple/SDKs/MacOSX10.6.sdk/System/Library/Frameworks -mmacosx-version-min=10.5 -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/i686-apple-darwin10/4.2.1 -I$INSTDIR/gmp/include -L$INSTDIR/gmp/lib"
-  export CXXFLAGS="-I/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/include/ -I/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/ -I.  -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/ -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/system/ -F/usr/lib/apple/SDKs/MacOSX10.6.sdk/System/Library/Frameworks -mmacosx-version-min=10.5 -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/i686-apple-darwin10/4.2.1 -I$INSTDIR/gmp/include -L$INSTDIR/gmp/lib"
-  export LDFLAGS="-L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/ -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/system/ -F/usr/lib/apple/SDKs/MacOSX10.6.sdk/System/Library/Frameworks -mmacosx-version-min=10.5"
-  #
   mkdir -p $PTDIR/
   mkdir -p $OUTDIR/
   #
   sudo dpkg -i *.deb
-  cd /usr
-  sudo tar -Jxvf /home/ubuntu/build/multiarch-darwin*tar.xz
-  cd ~/build
-  # For OpenSSL
-  sudo ln -s /usr/apple-osx/bin/apple-osx-gcc /usr/apple-osx/bin/i686-apple-darwin11-cc
-  #
-  tar xvf gmp.tar.bz2
-  cd gmp-*
-  find -type f | xargs touch --date="$REFERENCE_DATETIME"
-  ./configure --host=i686-apple-darwin11 --prefix=$INSTDIR/gmp --disable-static --enable-shared --enable-cxx
-  make
-  make install
+  tar xaf multiarch-darwin*tar.xz
+  export PATH="$PATH:$HOME/build/apple-osx/bin/"
+  unzip -d $INSTDIR gmp-mac32-utils.zip
+  unzip -d $INSTDIR openssl-mac32-utils.zip
   cp $INSTDIR/gmp/lib/*dylib* $INSTDIR/TorBrowserBundle.app/Tor/
-  cd ..
   #
+  export AR=$HOME/build/apple-osx/bin/i686-apple-darwin11-ar
+  export CC=$HOME/build/apple-osx/bin/i686-apple-darwin11-gcc
+  export CXX=$HOME/build/apple-osx/bin/i686-apple-darwin11-g++
+  # http://bugs.python.org/issue9437
+  export LDSHARED="$CC -pthread -shared"
+  # XXX Clean up these flags?
+  export CFLAGS="-I/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/include/ -I/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/ -I.  -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/ -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/system/ -F/usr/lib/apple/SDKs/MacOSX10.6.sdk/System/Library/Frameworks -mmacosx-version-min=10.5 -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/i686-apple-darwin10/4.2.1 -I$INSTDIR/gmp/include -L$INSTDIR/gmp/lib"
+  export CXXFLAGS="-I/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/include/ -I/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/ -I.  -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/ -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/system/ -F/usr/lib/apple/SDKs/MacOSX10.6.sdk/System/Library/Frameworks -mmacosx-version-min=10.5 -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/i686-apple-darwin10/4.2.1 -I$INSTDIR/gmp/include -L$INSTDIR/gmp/lib"
+  export LDFLAGS="-L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/ -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/system/ -F/usr/lib/apple/SDKs/MacOSX10.6.sdk/System/Library/Frameworks -mmacosx-version-min=10.5"
+
+  # Building go
   # http://golang.org/doc/install/source#environment
   export GOPATH="$HOME/go"
   export GOOS=darwin
@@ -100,13 +90,15 @@ script: |
   CC= CFLAGS= LDFLAGS= LDSHARED= ./make.bash
   cd ../..
   export PATH="$PATH:$PWD/go/bin"
-  #
+
+  # Building pyptlib
   cd pyptlib
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
   python setup.py build --build-lib build
   cp -a build/pyptlib $PTDIR/
   cd ..
-  #
+
+  # Building PyCrypto
   tar xzf pycrypto.tar.gz
   cd pycrypto-*
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
@@ -116,28 +108,32 @@ script: |
   python setup.py build --build-lib build
   cp -a build/Crypto $PTDIR/
   cd ..
-  #
+
+  # Building argparse
   tar xzf argparse.tar.gz
   cd argparse-*
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
   python setup.py build --build-lib build
   cp -a build/argparse.py $PTDIR/
   cd ..
-  #
-  tar xzf pyyaml.tar.gz
-  cd PyYAML-*
-  find -type f | xargs touch --date="$REFERENCE_DATETIME"
-  python setup.py build --build-lib build
-  cp -a build/yaml $PTDIR/
-  cd ..
-  #
+
+  # Building Zope interfaces
   unzip zope.interface.zip
   cd zope.interface-*
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
   python setup.py build --build-lib build
   cp -a build/zope $PTDIR/
   cd ..
-  #
+
+  # Building PyYAML
+  tar xzf pyyaml.tar.gz
+  cd PyYAML-*
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  python setup.py build --build-lib build
+  cp -a build/yaml $PTDIR/
+  cd ..
+
+  # Building Twisted
   tar xjf twisted.tar.bz2
   cd Twisted-*
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
@@ -145,7 +141,30 @@ script: |
   python setup.py build --build-lib build
   cp -a build/twisted $PTDIR/
   cd ..
-  #
+
+  # Building Parsley
+  tar xzf parsley.tar.gz
+  cd Parsley-*
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  python setup.py build --build-lib build
+  cp -a build/parsley.py $PTDIR/
+  cp -a build/ometa $PTDIR/
+  cp -a build/terml $PTDIR/
+  cd ..
+
+  # Building txsocksx
+  cd txsocksx
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  # Let's pretend we have the setup dependency already as we don't want to get
+  # it downloaded during building. Just pretending and thus avoiding another
+  # dependency should be fine here as txsocksx catches the exception due to
+  # missing __version__ and __sha__ .
+  mkdir vcversioner-1.14.1.1-py2.7.egg
+  python setup.py build --build-lib build
+  cp -a build/txsocksx $PTDIR/
+  cd ..
+
+  # Building obfsproxy
   cd obfsproxy
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
   python setup.py build --build-lib build
@@ -153,17 +172,11 @@ script: |
   cp -a bin/obfsproxy $PTDIR/obfsproxy.bin
   mkdir -p $INSTDIR/TorBrowserBundle.app/Docs/Obfsproxy
   cp -a {LICENSE,README} $INSTDIR/TorBrowserBundle.app/Docs/Obfsproxy
+  # XXX: Workaround for bug 11190
+  sed 's/python2/python/' -i $PTDIR/obfsproxy.bin
   cd ..
-  #
-  tar xzf openssl.tar.gz
-  cd openssl-*
-  find -type f | xargs touch --date="$REFERENCE_DATETIME"
-  CC=cc ./Configure --cross-compile-prefix=i686-apple-darwin11- $CFLAGS darwin-i386-cc --prefix=$INSTDIR/openssl
-  make # SHARED_LDFLAGS="-shared -dynamiclib -L/usr/lib/apple/SDKs/MacOSX10.6.sdk/usr/lib/"
-  make install
-  #cp $INSTDIR/openssl/lib/*.dylib $INSTDIR/TorBrowserBundle.app/Tor/
-  cd ..
-  #
+
+  # Building M2Crypto
   tar xzf m2crypto.tar.gz
   cd M2Crypto-*
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
@@ -177,7 +190,8 @@ script: |
   python setup.py build --build-lib build
   cp -a build/M2Crypto $PTDIR/
   cd ..
-  #
+
+  # Building flashproxy
   cd flashproxy
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
   make dist DISTNAME=flashproxy-client
@@ -185,23 +199,35 @@ script: |
   mkdir -p $INSTDIR/TorBrowserBundle.app/Docs/FlashProxy
   cp -a {doc/*,README,LICENSE,ChangeLog} $INSTDIR/TorBrowserBundle.app/Docs/FlashProxy
   cd ..
-  #
-  cd fteproxy
+
+  # Building libfte
+  cd libfte
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
   CFLAGS="-L$INSTDIR/Tor -I$INSTDIR/gmp/include $CFLAGS" CXXFLAGS="-L$INSTDIR/Tor -I$INSTDIR/gmp/include $CXXFLAGS" make
-  cp -a bin/fteproxy $PTDIR/
   cp -ra fte $PTDIR/
-  mkdir -p $INSTDIR/Docs/fteproxy
-  cp -a {COPYING,README.md} $INSTDIR/Docs/fteproxy
+  mkdir -p $INSTDIR/TorBrowserBundle.app/Docs/libfte
+  cp -a {LICENSE,README.md} $INSTDIR/TorBrowserBundle.app/Docs/libfte
+  cp -an thirdparty/re2/LICENSE $INSTDIR/TorBrowserBundle.app/Docs/libfte/LICENSE.re2
   cd ..
-  #
+
+  # Building fteproxy
+  cd fteproxy
+  find -type f | xargs touch --date="$REFERENCE_DATETIME"
+  cp -a bin/fteproxy $PTDIR/fteproxy.bin
+  cp -ra fteproxy $PTDIR/
+  mkdir -p $INSTDIR/TorBrowserBundle.app/Docs/fteproxy
+  cp -a {COPYING,README.md} $INSTDIR/TorBrowserBundle.app/Docs/fteproxy
+  cd ..
+
+  # Building goptlib
   cd goptlib
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
   mkdir -p "$GOPATH/src/git.torproject.org/pluggable-transports"
   ln -sf "$PWD" "$GOPATH/src/git.torproject.org/pluggable-transports/goptlib.git"
   CGO_ENABLED=1 CC="$CC $CFLAGS $LDFLAGS" go install git.torproject.org/pluggable-transports/goptlib.git
   cd ..
-  #
+
+  # Building meek
   cd meek
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
   cd meek-client
@@ -217,7 +243,8 @@ script: |
   mkdir -p $INSTDIR/TorBrowserBundle.app/Docs/meek
   cp -a README doc/*.1 $INSTDIR/TorBrowserBundle.app/Docs/meek
   cd ..
-  #
+
+  # Grabbing the result
   cd $INSTDIR
   ~/build/dzip.sh pluggable-transports-mac$GBUILD_BITS-gbuilt.zip TorBrowserBundle.app
   cp pluggable-transports-mac$GBUILD_BITS-gbuilt.zip $OUTDIR/
