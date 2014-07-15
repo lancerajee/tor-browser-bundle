@@ -22,7 +22,7 @@ LIBFTE_TAG=0.0.2
 FTEPROXY_TAG=0.2.14
 LIBDMG_TAG=dfd5e5cc3dc1191e37d3c3a6118975afdd1d7014
 
-GITIAN_TAG=tor-browser-builder-3.x-5
+GITIAN_TAG=tor-browser-builder-3.x-6
 
 OPENSSL_VER=1.0.1g
 GMP_VER=5.1.3
