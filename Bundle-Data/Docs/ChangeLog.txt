@@ -1,3 +1,20 @@
+Tor Browser Bundle 3.6.3 -- Jul 24 2014
+ * All Platforms
+   * Update Firefox to 24.7.0esr
+   * Update NoScript to 2.6.8.33
+   * Update HTTPS Everywhere to 3.5.3
+   * Update Torbutton to 1.6.11.0
+     * Bug 12221: Remove obsolete Javascript components from the toggle era
+     * Bug 10819: Bind new third party isolation pref to Torbutton security UI
+     * Bug 9268: Fix some window resizing corner cases with DPI and taskbar size.
+   * Bug 12381: Fix Pluggable Transport+Proxy Support on Windows
+     * Update obfsproxy to 0.2.12
+     * Update FTE to 0.2.17
+ * Linux:
+   * Bug 11102: Set Window Class to "Tor Browser" to aid in Desktop navigation
+   * Bug 12249: Don't create PT debug files anymore
+
+
 Tor Browser Bundle 3.6.2 -- Jun 9 2014
  * All Platforms
    * Update Firefox to 24.6.0esr
