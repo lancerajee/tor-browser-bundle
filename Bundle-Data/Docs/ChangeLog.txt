@@ -5,6 +5,7 @@ Tor Browser Bundle 3.6.3 -- Jul 24 2014
    * Update FTE to 0.2.17
    * Update NoScript to 2.6.8.33
    * Update HTTPS Everywhere to 3.5.3
+   * Bug 12673: Update FTE bridges
    * Update Torbutton to 1.6.11.0
      * Bug 12221: Remove obsolete Javascript components from the toggle era
      * Bug 10819: Bind new third party isolation pref to Torbutton security UI
