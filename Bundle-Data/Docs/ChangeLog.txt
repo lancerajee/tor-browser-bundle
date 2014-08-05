@@ -1,3 +1,9 @@
+Tor Browser Bundle 3.6.3 -- Aug 6 2014
+ * All Platforms
+   * Update Tor to 0.2.4.23
+   * Update Tor launcher to 0.2.5.6
+     * Bug 9516: Send Tor Launcher log messages to Browser Console
+
 Tor Browser Bundle 3.6.3 -- Jul 24 2014
  * All Platforms
    * Update Firefox to 24.7.0esr
