@@ -273,3 +273,30 @@ index 0000000..97c70b2
 -- 
 1.9.1
 
+From 6a584ab03670b40031704f2c32bd8f41cb74d694 Mon Sep 17 00:00:00 2001
+From: George Kadianakis <desnacked@riseup.net>
+Date: Thu, 1 May 2014 14:44:29 +0100
+Subject: [PATCH 1/2] Fix a misuse of strlcpy() introduced by the #11156 patch.
+
+---
+ src/or/nodelist.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/or/nodelist.c b/src/or/nodelist.c
+index a38a6d4..09232f9 100644
+--- a/src/or/nodelist.c
++++ b/src/or/nodelist.c
+@@ -1510,8 +1510,8 @@ update_router_have_minimum_dir_info(void)
+   }
+ 
+   if (should_delay_dir_fetches(get_options(), &delay_fetches_msg)) {
+-    log_notice(LD_DIR, "Delaying dir fetches: %s", delay_fetches_msg);
+-    strlcpy(dir_info_status, "%s",  sizeof(dir_info_status));
++    log_notice(LD_DIR, "Delaying directory fetches: %s", delay_fetches_msg);
++    strlcpy(dir_info_status, delay_fetches_msg,  sizeof(dir_info_status));
+     res = 0;
+     goto done;
+   }
+-- 
+1.9.1
+
