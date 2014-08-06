@@ -1,0 +1,66 @@
+From 813dc75f717cab1f7896c77e838c496daa3e4deb Mon Sep 17 00:00:00 2001
+From: Roger Dingledine <arma@torproject.org>
+Date: Wed, 6 Aug 2014 15:57:24 -0700
+Subject: [PATCH] Build circuits more readily when DisableNetwork goes to 0
+
+When Tor starts with DisabledNetwork set, it would correctly
+conclude that it shouldn't try making circuits, but it would
+mistakenly cache this conclusion and continue believing it even
+when DisableNetwork is set to 0. Fixes the bug introduced by the
+fix for bug 11200; bugfix on 0.2.5.4-alpha.
+---
+ src/or/nodelist.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
+
+diff --git a/src/or/nodelist.c b/src/or/nodelist.c
+index e814e16..18b6677 100644
+--- a/src/or/nodelist.c
++++ b/src/or/nodelist.c
+@@ -1240,10 +1240,21 @@ static char dir_info_status[256] = "";
+ int
+ router_have_minimum_dir_info(void)
+ {
++  static int logged_delay=0;
++  const char *delay_fetches_msg = NULL;
++  if (should_delay_dir_fetches(get_options(), &delay_fetches_msg)) {
++    if (!logged_delay)
++      log_notice(LD_DIR, "Delaying directory fetches: %s", delay_fetches_msg);
++    logged_delay=1;
++    strlcpy(dir_info_status, delay_fetches_msg,  sizeof(dir_info_status));
++    return 0;
++  }
++  logged_delay = 0; /* reset it if we get this far */
++
+   if (PREDICT_UNLIKELY(need_to_update_have_min_dir_info)) {
+     update_router_have_minimum_dir_info();
+-    need_to_update_have_min_dir_info = 0;
+   }
++
+   return have_min_dir_info;
+ }
+ 
+@@ -1439,7 +1450,6 @@ update_router_have_minimum_dir_info(void)
+   const networkstatus_t *consensus =
+     networkstatus_get_reasonably_live_consensus(now,usable_consensus_flavor());
+   int using_md;
+-  const char *delay_fetches_msg = NULL;
+ 
+   if (!consensus) {
+     if (!networkstatus_get_latest_consensus())
+@@ -1452,13 +1462,6 @@ update_router_have_minimum_dir_info(void)
+     goto done;
+   }
+ 
+-  if (should_delay_dir_fetches(get_options(), &delay_fetches_msg)) {
+-    log_notice(LD_DIR, "Delaying directory fetches: %s", delay_fetches_msg);
+-    strlcpy(dir_info_status, delay_fetches_msg,  sizeof(dir_info_status));
+-    res = 0;
+-    goto done;
+-  }
+-
+   using_md = consensus->flavor == FLAV_MICRODESC;
+ 
+   {
+-- 
+1.9.1
+
