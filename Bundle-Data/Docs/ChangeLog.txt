@@ -20,6 +20,7 @@ Tor Browser Bundle 3.6.4 -- Aug 8 2014
  * All Platforms
    * Update Tor to 0.2.4.23
    * Update Tor launcher to 0.2.5.6
+     * Bug 9516: Show Tor log in TorBrowser's Browser Console
    * Update OpenSSL to 1.0.1i
    * Backported Tor Patches:
      * Bug 11654: Properly apply the fix for malformed bug11156 log message
