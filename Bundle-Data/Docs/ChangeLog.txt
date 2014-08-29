@@ -3,6 +3,7 @@ Tor Browser Bundle 3.6.5 -- Sep 2 2014
    * Update Firefox to 24.8.0esr
    * Update Torbutton to 1.6.12.1
      * Bug 12684: New strings for canvas image extraction message
+     * Bug 8940: Move RecommendedTBBVersions file to www.torproject.org
      * Bug 9531: Workaround to avoid rare hangs during New Identity
    * Bug 12684: Improve Canvas image extraction permissions prompt
    * Bug 7265: Only prompt for first party canvas access. Log all scripts
