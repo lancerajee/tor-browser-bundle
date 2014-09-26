@@ -10,7 +10,6 @@ Tor Browser Bundle 3.6.6 -- Sep 24 2014
      * Bug 10804: Workaround fix for some cases of startup hang
  * Linux
    * Bug 9150: Make RPATH unavailable on Tor binary.
-   * Bug 13031: Add full RELRO protection.
 
 Tor Browser Bundle 3.6.5 -- Sep 2 2014
  * All Platforms
