@@ -78,6 +78,10 @@ Detailed Explanation of Scripts:
        alpha packages
      - incrementals-beta: The equivalent to the 'incrementals' rule for
        beta packages
+     - update_responses-alpha: The equivalent to the 'update_responses' rule
+       for alpha packages
+     - update_responses-beta: The equivalent to the 'update_responses' rule
+       for beta packages
 
  1. check-prerequisites.sh: This script checks if your system is capable of
     running Gitian, and if it is not, it tells you what you need to do.
