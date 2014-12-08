@@ -71,6 +71,13 @@ Detailed Explanation of Scripts:
      - match-nightly: The equivalent to the 'match' rule for nightly packages
      - match-alpha: The equivalent to the 'match' rule for alpha packages
      - match-beta: The equivalent to the 'match' rule for beta packages
+     - hash-nightly: The equivalent to the 'hash' rule for nightly packages
+     - hash-alpha: The equivalent to the 'hash' rule for alpha packages
+     - hash-beta: The equivalent to the 'hash' rule for beta packages
+     - incrementals-alpha: The equivalent to the 'incrementals' rule for
+       alpha packages
+     - incrementals-beta: The equivalent to the 'incrementals' rule for
+       beta packages
 
  1. check-prerequisites.sh: This script checks if your system is capable of
     running Gitian, and if it is not, it tells you what you need to do.
