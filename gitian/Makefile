@@ -33,6 +33,9 @@ build-beta:
 	./hash-bundles.sh versions.beta
 
 incrementals:
+	../tools/update-responses/gen_incrementals
+
+update_responses:
 	../tools/update-responses/update_responses
 
 hash:
