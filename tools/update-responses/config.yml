@@ -9,7 +9,7 @@ channels:
     release: 4.0.3
     alpha: 4.5-alpha-2
 versions:
-    4.0.2:
+    4.0.3:
         platformVersion: 31.4.0
         detailsURL: https://www.torproject.org/projects/torbrowser.html.en
         download_url: https://www.torproject.org/dist/torbrowser/4.0.3
