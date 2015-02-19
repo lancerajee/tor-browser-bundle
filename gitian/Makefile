@@ -1,18 +1,21 @@
 TORSOCKS = torsocks
 
-all: clean prep build
+all: clean resume
 
-nightly: clean prep-nightly build-nightly
+nightly: clean resume-nightly
 
-alpha: clean prep-alpha build-alpha
+alpha: clean resume-alpha
 
-beta: clean prep-beta build-beta
+resume: prep build incrementals hash
+
+resume-nightly: prep-nightly build-nightly
+
+resume-alpha: prep-alpha build-alpha incrementals-alpha hash-alpha
 
 build:
 	./mkbundle-linux.sh
 	./mkbundle-windows.sh
 	./mkbundle-mac.sh
-	./hash-bundles.sh
 
 build-nightly:
 	./mkbundle-linux.sh versions.nightly
@@ -24,22 +27,12 @@ build-alpha:
 	./mkbundle-linux.sh versions.alpha
 	./mkbundle-windows.sh versions.alpha
 	./mkbundle-mac.sh versions.alpha
-	./hash-bundles.sh versions.alpha
-
-build-beta:
-	./mkbundle-linux.sh versions.beta
-	./mkbundle-windows.sh versions.beta
-	./mkbundle-mac.sh versions.beta
-	./hash-bundles.sh versions.beta
 
 incrementals:
-	../tools/update-responses/gen_incrementals release
+	../tools/update-responses/gen_incrementals release || echo 'Warning: could not generate incremental MARs.' >&2
 
 incrementals-alpha:
-	../tools/update-responses/gen_incrementals alpha
-
-incrementals-beta:
-	../tools/update-responses/gen_incrementals beta
+	../tools/update-responses/gen_incrementals alpha || echo 'Warning: could not generate incremental MARs.' >&2
 
 update_responses:
 	../tools/update-responses/update_responses release
@@ -47,17 +40,12 @@ update_responses:
 update_responses-alpha:
 	../tools/update-responses/update_responses alpha
 
-update_responses-beta:
-	../tools/update-responses/update_responses beta
 
 hash:
 	./hash-bundles.sh versions
 
 hash-alpha:
 	./hash-bundles.sh versions.alpha
-
-hash-beta:
-	./hash-bundles.sh versions.beta
 
 hash-nightly:
 	./hash-bundles.sh versions.nightly
@@ -71,9 +59,6 @@ sign-alpha:
 sign-nightly:
 	./upload-signature.sh versions.nightly
 
-sign-beta:
-	$(TORSOCKS) ./upload-signature.sh versions.beta
-
 match:
 	$(TORSOCKS) ./check-match.sh versions
 
@@ -82,9 +67,6 @@ match-nightly:
 
 match-alpha:
 	$(TORSOCKS) ./check-match.sh versions.alpha
-
-match-beta:
-	$(TORSOCKS) ./check-match.sh versions.beta
 
 prep:
 	./check-prerequisites.sh
@@ -98,9 +80,6 @@ prep-alpha:
 	./check-prerequisites.sh
 	$(TORSOCKS) ./fetch-inputs.sh ../../gitian-builder/inputs/ versions.alpha
 
-prep-beta:
-	./check-prerequisites.sh
-	$(TORSOCKS) ./fetch-inputs.sh ../../gitian-builder/inputs/ versions.beta
 
 clean: clean-utils clean-tor clean-browser clean-pt clean-bundle
 	rm -f ../../gitian-builder/inputs/*.yml
