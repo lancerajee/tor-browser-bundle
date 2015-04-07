@@ -1,7 +1,7 @@
 Tor Browser 4.0.7 -- Apr 9 2015
  * All Platforms
    * Update Tor to 0.2.5.12
-   * Update NoScript to 2.6.9.20
+   * Update NoScript to 2.6.9.21
 
 Tor Browser 4.0.6 -- Mar 31 2015
  * All Platforms
