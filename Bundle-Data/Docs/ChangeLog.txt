@@ -1,3 +1,7 @@
+Tor Browser 4.0.8 -- Apr 10 2015
+ * All Platforms
+   * Bug 15637: Fix update loop
+
 Tor Browser 4.0.7 -- Apr 9 2015
  * All Platforms
    * Update Tor to 0.2.5.12
