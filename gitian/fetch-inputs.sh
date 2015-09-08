@@ -162,7 +162,7 @@ do
   get "${!PACKAGE}" "${!URL}"
 done
 
-# NoScript and HTTPS-Everywhere are magikal and special:
+# NoScript is magikal and special:
 wget -U "" -N ${NOSCRIPT_URL}
 
 # Verify packages with weak or no signatures via direct sha256 check
@@ -259,6 +259,13 @@ goxcrypto             https://go.googlesource.com/crypto  $GO_X_CRYPTO_TAG
 goxnet                https://go.googlesource.com/net  $GO_X_NET_TAG
 obfs4                 https://git.torproject.org/pluggable-transports/obfs4.git $OBFS4_TAG
 EOF
+
+# HTTPS-Everywhere is special, too. We need to initialize the git submodules and
+# update them here. Otherwise it would happen during the build.
+cd https-everywhere
+git submodule init
+git submodule update
+cd ..
 
 exit 0
 
