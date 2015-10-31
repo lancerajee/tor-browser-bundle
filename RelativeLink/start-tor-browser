@@ -270,6 +270,10 @@ fi
 
 LD_LIBRARY_PATH="${HOME}/TorBrowser/Tor/"
 export LD_LIBRARY_PATH
+# We need to disable LSan which enabled by default now. Otherwise we'll get
+# a crash during shutdown: https://bugs.torproject.org/10599#comment:59
+ASAN_OPTIONS="detect_leaks=0"
+export ASAN_OPTIONS
 
 function setControlPortPasswd() {
     local ctrlPasswd=$1

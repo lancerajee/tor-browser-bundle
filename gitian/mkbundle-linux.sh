@@ -101,19 +101,12 @@ fi
 
 cd $GITIAN_DIR
 
-if [ ! -f inputs/binutils-$BINUTILS_VER-linux32-utils.zip -o \
-     ! -f inputs/binutils-$BINUTILS_VER-linux64-utils.zip -o \
-     ! -f inputs/gcc-$GCC_VER-linux32-utils.zip -o \
+if [ ! -f inputs/binutils-$BINUTILS_VER-linux64-utils.zip -o \
      ! -f inputs/gcc-$GCC_VER-linux64-utils.zip -o \
-     ! -f inputs/openssl-$OPENSSL_VER-linux32-utils.zip -o \
      ! -f inputs/openssl-$OPENSSL_VER-linux64-utils.zip -o \
-     ! -f inputs/libevent-${LIBEVENT_TAG_ORIG#release-}-linux32-utils.zip -o \
      ! -f inputs/libevent-${LIBEVENT_TAG_ORIG#release-}-linux64-utils.zip -o \
-     ! -f inputs/python-$PYTHON_VER-linux32-utils.zip -o \
      ! -f inputs/python-$PYTHON_VER-linux64-utils.zip -o \
-     ! -f inputs/lxml-$LXML_VER-linux32-utils.zip -o \
      ! -f inputs/lxml-$LXML_VER-linux64-utils.zip -o \
-     ! -f inputs/gmp-$GMP_VER-linux32-utils.zip -o \
      ! -f inputs/gmp-$GMP_VER-linux64-utils.zip ];
 then
   echo
@@ -129,19 +122,12 @@ then
 
   cd inputs
   cp -a ../build/out/*-utils.zip .
-  ln -sf binutils-$BINUTILS_VER-linux32-utils.zip binutils-linux32-utils.zip
   ln -sf binutils-$BINUTILS_VER-linux64-utils.zip binutils-linux64-utils.zip
-  ln -sf gcc-$GCC_VER-linux32-utils.zip gcc-linux32-utils.zip
   ln -sf gcc-$GCC_VER-linux64-utils.zip gcc-linux64-utils.zip
-  ln -sf openssl-$OPENSSL_VER-linux32-utils.zip openssl-linux32-utils.zip
   ln -sf openssl-$OPENSSL_VER-linux64-utils.zip openssl-linux64-utils.zip
-  ln -sf libevent-${LIBEVENT_TAG_ORIG#release-}-linux32-utils.zip libevent-linux32-utils.zip
   ln -sf libevent-${LIBEVENT_TAG_ORIG#release-}-linux64-utils.zip libevent-linux64-utils.zip
-  ln -sf python-$PYTHON_VER-linux32-utils.zip python-linux32-utils.zip
   ln -sf python-$PYTHON_VER-linux64-utils.zip python-linux64-utils.zip
-  ln -sf lxml-$LXML_VER-linux32-utils.zip lxml-linux32-utils.zip
   ln -sf lxml-$LXML_VER-linux64-utils.zip lxml-linux64-utils.zip
-  ln -sf gmp-$GMP_VER-linux32-utils.zip gmp-linux32-utils.zip
   ln -sf gmp-$GMP_VER-linux64-utils.zip gmp-linux64-utils.zip
   cd ..
   #cp -a result/utils-linux-res.yml inputs/
@@ -152,25 +138,17 @@ else
   # We might have built the utilities in the past but maybe the links are
   # pointing to the wrong version. Refresh them.
   cd inputs
-  ln -sf binutils-$BINUTILS_VER-linux32-utils.zip binutils-linux32-utils.zip
   ln -sf binutils-$BINUTILS_VER-linux64-utils.zip binutils-linux64-utils.zip
-  ln -sf gcc-$GCC_VER-linux32-utils.zip gcc-linux32-utils.zip
   ln -sf gcc-$GCC_VER-linux64-utils.zip gcc-linux64-utils.zip
-  ln -sf openssl-$OPENSSL_VER-linux32-utils.zip openssl-linux32-utils.zip
   ln -sf openssl-$OPENSSL_VER-linux64-utils.zip openssl-linux64-utils.zip
-  ln -sf libevent-${LIBEVENT_TAG_ORIG#release-}-linux32-utils.zip libevent-linux32-utils.zip
   ln -sf libevent-${LIBEVENT_TAG_ORIG#release-}-linux64-utils.zip libevent-linux64-utils.zip
-  ln -sf python-$PYTHON_VER-linux32-utils.zip python-linux32-utils.zip
   ln -sf python-$PYTHON_VER-linux64-utils.zip python-linux64-utils.zip
-  ln -sf lxml-$LXML_VER-linux32-utils.zip lxml-linux32-utils.zip
   ln -sf lxml-$LXML_VER-linux64-utils.zip lxml-linux64-utils.zip
-  ln -sf gmp-$GMP_VER-linux32-utils.zip gmp-linux32-utils.zip
   ln -sf gmp-$GMP_VER-linux64-utils.zip gmp-linux64-utils.zip
   cd ..
 fi
 
-if [ ! -f inputs/tor-linux32-gbuilt.zip -o \
-     ! -f inputs/tor-linux64-gbuilt.zip ];
+if [ ! -f inputs/tor-linux64-gbuilt.zip ];
 then
   echo
   echo "****** Starting Tor Component of Linux Bundle (2/5 for Linux) ******"
@@ -192,9 +170,7 @@ else
   echo
 fi
 
-
-if [ ! -f inputs/tor-browser-linux32-gbuilt.zip -o \
-     ! -f inputs/tor-browser-linux64-gbuilt.zip ];
+if [ ! -f inputs/tor-browser-linux64-gbuilt.zip ];
 then
   echo
   echo "****** Starting TorBrowser Component of Linux Bundle (3/5 for Linux) ******"
@@ -217,8 +193,7 @@ else
   echo
 fi
 
-if [ ! -f inputs/pluggable-transports-linux32-gbuilt.zip -o \
-     ! -f inputs/pluggable-transports-linux64-gbuilt.zip ];
+if [ ! -f inputs/pluggable-transports-linux64-gbuilt.zip ];
 then
   echo
   echo "****** Starting Pluggable Transports Component of Linux Bundle (4/5 for Linux) ******"
@@ -275,4 +250,3 @@ fi
 echo
 echo "****** Linux Bundle complete ******"
 echo
-

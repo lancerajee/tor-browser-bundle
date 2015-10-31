@@ -3,7 +3,6 @@ name: "bundle-linux"
 suites:
 - "lucid"
 architectures:
-- "i386"
 - "amd64"
 packages:
 - "unzip"
@@ -29,16 +28,12 @@ remotes:
   "dir": "faketime"
 files:
 # TODO: Can we use an env for this file+version??
-- "tor-browser-linux32-gbuilt.zip"
 - "tor-browser-linux64-gbuilt.zip"
-- "tor-linux32-gbuilt.zip"
 - "tor-linux64-gbuilt.zip"
-- "pluggable-transports-linux32-gbuilt.zip"
 - "pluggable-transports-linux64-gbuilt.zip"
-- "python-linux32-utils.zip"
 - "python-linux64-utils.zip"
-- "lxml-linux32-utils.zip"
 - "lxml-linux64-utils.zip"
+- "mar-tools-linux64.zip"
 - "torrc-defaults-appendix-linux"
 - "bridge_prefs.js"
 - "meek-http-helper-user.js"
@@ -51,8 +46,6 @@ files:
 - "bare-version"
 - "bundle.inputs"
 - "versions"
-- "mar-tools-linux32.zip"
-- "mar-tools-linux64.zip"
 - "tbb-docs.zip"
 - "NotoSansCJKsc-Regular.otf"
 - "STIXv1.1.1-latex.zip"
@@ -226,6 +219,8 @@ script: |
   python $MARTOOLS/createprecomplete.py
   popd
   #
+  # MAke libsasan available as the MAR executables are linked against it.
+  export LD_LIBRARY_PATH=~/build/tor-browser/Browser/TorBrowser/Tor
   # Create full MAR file and compressed package.
   MAR_FILE=tor-browser-linux${GBUILD_BITS}-${TORBROWSER_VERSION}_${PKG_LOCALE}.mar
   MAR=$MARTOOLS/mar MBSDIFF=$MARTOOLS/mbsdiff $MARTOOLS/make_full_update.sh -q $OUTDIR/$MAR_FILE ${PKG_DIR}/Browser

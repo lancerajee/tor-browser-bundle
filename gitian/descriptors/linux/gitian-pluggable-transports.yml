@@ -3,7 +3,6 @@ name: "pluggable-transports-linux"
 suites:
 - "lucid"
 architectures:
-- "i386"
 - "amd64"
 packages:
 - "faketime"
@@ -52,9 +51,7 @@ files:
 - "parsley.tar.gz"
 - "go.tar.gz"
 - "dzip.sh"
-- "gmp-linux32-utils.zip"
 - "gmp-linux64-utils.zip"
-- "openssl-linux32-utils.zip"
 - "openssl-linux64-utils.zip"
 script: |
   INSTDIR="$HOME/install"

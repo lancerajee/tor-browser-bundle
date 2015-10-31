@@ -3,7 +3,6 @@ name: "torbrowser-linux"
 suites:
 - "lucid"
 architectures:
-- "i386"
 - "amd64"
 packages:
 - "unzip"
@@ -26,11 +25,8 @@ remotes:
 - "url": "https://github.com/wolfcw/libfaketime"
   "dir": "faketime"
 files:
-- "binutils-linux32-utils.zip"
 - "binutils-linux64-utils.zip"
-- "gcc-linux32-utils.zip"
 - "gcc-linux64-utils.zip"
-- "python-linux32-utils.zip"
 - "python-linux64-utils.zip"
 - "re-dzip.sh"
 - "dzip.sh"
@@ -38,8 +34,6 @@ files:
 script: |
   source versions
   INSTDIR="$HOME/install"
-  export CFLAGS="-frandom-seed=tor"
-  export CXXFLAGS="-frandom-seed=tor"
   export TZ=UTC
   export LC_ALL=C
   umask 0022
@@ -80,13 +74,8 @@ script: |
   ln -sf hardened-cc c++
   cd ~/build
   export PATH=$INSTDIR/gcc/bin:$INSTDIR/binutils/bin:$PATH
-  ARCH=""
-  if [ $GBUILD_BITS == "64" ];
-  then
-    ARCH="64"
-  fi
   # Make sure our GCC gets properly used.
-  export LD_LIBRARY_PATH=$INSTDIR/gcc/lib$ARCH
+  export LD_LIBRARY_PATH=$INSTDIR/gcc/lib64
   #
   mkdir -p $INSTDIR/Browser/
   mkdir -p $INSTDIR/Debug/Browser/components
@@ -101,6 +90,7 @@ script: |
   cd ..
 
   cd tor-browser
+  mv .mozconfig-asan .mozconfig
   # .git and the src takes up a lot of useless space, and we need the space to build
   rm -rf .git
   find -type f -print0 | xargs -0 touch --date="$REFERENCE_DATETIME"
@@ -120,7 +110,9 @@ script: |
   export LD_PRELOAD="$INSTDIR/faketime/usr/local/lib/faketime/libfaketime.so.1"
   export FAKETIME_SKIP_CMDS="python2.7,bash,make"
   find -type f -print0 | xargs -0 touch --date="$REFERENCE_DATETIME"
-  make BUILD_HOSTNAME="gitian" $MAKEOPTS -f client.mk build
+  # Without disabling LSan our build is blowing up:
+  # https://bugs.torproject.org/10599#comment:52
+  ASAN_OPTIONS="detect_leaks=0" make BUILD_HOSTNAME="gitian" $MAKEOPTS -f client.mk build
   # Packaging is broken with libfaketime enabled, thus we disable it again. See
   # #12461 comments 11 and 12 for details.
   export LD_PRELOAD=""

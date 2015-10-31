@@ -3,7 +3,6 @@ name: "utils-linux"
 suites:
 - "lucid"
 architectures:
-- "i386"
 - "amd64"
 packages:
 - "faketime"
@@ -35,6 +34,7 @@ files:
 - "gmp.tar.bz2"
 - "versions"
 - "dzip.sh"
+- "libfaketime-asan.patch"
 script: |
   INSTDIR="$HOME/install"
   source versions
@@ -56,14 +56,16 @@ script: |
   # faster when linking Tor Browser code (especially libxul). But apart from
   # that it fixes #12103 and issues with ESR 31 and our Gitian setup as well
   # (see bug #12743).
-  ./configure --prefix=$INSTDIR/binutils --disable-multilib --enable-gold
+  ./configure --prefix=$INSTDIR/binutils --disable-multilib --enable-gold --enable-plugins
   make $MAKEOPTS
   make install
   cd ..
+  export PATH=$INSTDIR/binutils/bin:$PATH
 
   # Building GCC
   tar xjf gcc.tar.bz2
   cd gcc-*
+  patch -p1 < ~/build/libfaketime-asan.patch
   ./configure --prefix=$INSTDIR/gcc --disable-multilib --enable-languages=c,c++
   make $MAKEOPTS
   make install
@@ -89,12 +91,7 @@ script: |
   tar xzf openssl.tar.gz
   cd openssl-*
   find -type f -print0 | xargs -0 touch --date="$REFERENCE_DATETIME"
-  if [ $GBUILD_BITS == "64" ];
-  then
-    ./config -shared --prefix=$INSTDIR/openssl enable-ec_nistp_64_gcc_128
-  else
-    ./config -shared --prefix=$INSTDIR/openssl
-  fi
+  ./config -shared --prefix=$INSTDIR/openssl enable-ec_nistp_64_gcc_128
   # Using $MAKEOPTS breaks the build. Might be the issue mentioned on
   # http://cblfs.cross-lfs.org/index.php/OpenSSL.
   make

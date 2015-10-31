@@ -1,0 +1,28 @@
+From 0ef83e9a0631e25e62e1dbc483108742fc125304 Mon Sep 17 00:00:00 2001
+From: Georg Koppen <gk@torproject.org>
+Date: Mon, 14 Sep 2015 14:27:36 +0000
+Subject: [PATCH] No dying anymore
+
+---
+ libsanitizer/asan/asan_linux.cc |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/libsanitizer/asan/asan_linux.cc b/libsanitizer/asan/asan_linux.cc
+index c504168..1d1a6dd 100644
+--- a/libsanitizer/asan/asan_linux.cc
++++ b/libsanitizer/asan/asan_linux.cc
+@@ -112,7 +112,10 @@ void AsanCheckDynamicRTPrereqs() {
+     Report("ASan runtime does not come first in initial library list; "
+            "you should either link runtime to your application or "
+            "manually preload it with LD_PRELOAD.\n");
+-    Die();
++    // Don't die here. We are preloading libfaketime as we need it for
++    // reproducible builds which makes it always the first DSO. Thus, dying here
++    // breaks the build for us.
++    // Die();
+   }
+ }
+ 
+-- 
+1.7.10.4
+

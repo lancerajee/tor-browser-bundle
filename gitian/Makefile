@@ -14,27 +14,27 @@ resume-alpha: prep-alpha build-alpha incrementals-alpha hash-alpha
 
 build:
 	./mkbundle-linux.sh
-	./mkbundle-windows.sh
-	./mkbundle-mac.sh
+	#./mkbundle-windows.sh
+	#./mkbundle-mac.sh
 
 build-nightly:
 	./mkbundle-linux.sh versions.nightly
-	./mkbundle-windows.sh versions.nightly
-	./mkbundle-mac.sh versions.nightly
-	./hash-bundles.sh versions.nightly
+	#./mkbundle-windows.sh versions.nightly
+	#./mkbundle-mac.sh versions.nightly
+	#./hash-bundles.sh versions.nightly
 
 build-alpha:
 	./mkbundle-linux.sh versions.alpha
-	./mkbundle-windows.sh versions.alpha
-	./mkbundle-mac.sh versions.alpha
+	#./mkbundle-windows.sh versions.alpha
+	#./mkbundle-mac.sh versions.alpha
 
 incrementals:
 	$(TORSOCKS) ../tools/update-responses/download_missing_versions release
 	../tools/update-responses/gen_incrementals release
 
 incrementals-alpha:
-	$(TORSOCKS) ../tools/update-responses/download_missing_versions alpha
-	../tools/update-responses/gen_incrementals alpha
+	$(TORSOCKS) ../tools/update-responses/download_missing_versions hardened
+	../tools/update-responses/gen_incrementals hardened
 
 signmars:
 	./signmars.sh versions
@@ -49,8 +49,7 @@ update_responses:
 	../tools/update-responses/update_responses release
 
 update_responses-alpha:
-	../tools/update-responses/update_responses alpha
-
+	../tools/update-responses/update_responses hardened
 
 hash:
 	./hash-bundles.sh versions
