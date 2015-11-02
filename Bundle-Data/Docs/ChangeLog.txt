@@ -11,6 +11,7 @@ Tor Browser 5.0.4 -- November 3 2015
      * Translation updates
    * Bug 16937: Remove the en-US dictionary from non en-US Tor Browser bundles
    * Bug 17318: Remove dead ScrambleSuit bridge
+   * Bug 17473: Update meek-amazon fingerprint
    * Bug 16983: Isolate favicon requests caused by the tab list dropdown
    * Bug 17102: Don't crash while opening a second Tor Browser
  * Windows:
