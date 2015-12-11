@@ -17,6 +17,7 @@ Tor Browser 5.0.5 -- December 15 2015
    * Bug 17502: Add a preference for hiding "Open with" on download dialog
    * Bug 17446: Prevent canvas extraction by third parties (fixup of #6253)
    * Bug 16441: Suppress "Reset Tor Browser" prompt
+   * Bug 17747: Add ndnop3 as new default obfs4 bridge
 
 Tor Browser 5.0.4 -- November 3 2015
  * All Platforms
