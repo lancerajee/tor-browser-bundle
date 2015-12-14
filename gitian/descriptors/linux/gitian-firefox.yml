@@ -146,6 +146,7 @@ script: |
   for LIB in $NSS_LIBS $NSPR_LIBS; do
     cp -p obj-*/dist/bin/$LIB $MARTOOLS/
   done
+  cp -p $INSTDIR/gcc/lib64/libasan.so.2 $MARTOOLS/
   cd ~/build
   ~/build/dzip.sh mar-tools-linux${GBUILD_BITS}.zip mar-tools
   cp -p mar-tools-linux${GBUILD_BITS}.zip $OUTDIR/
