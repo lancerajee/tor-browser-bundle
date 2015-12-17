@@ -10,14 +10,15 @@ build_targets:
     osx64: Darwin_x86_64-gcc3
 channels:
     alpha: 5.5a1
-    release: 5.0.5
+    release: 5.0.6
 versions:
-    5.0.5:
+    5.0.6:
         platformVersion: 38.5.0
         detailsURL: https://www.torproject.org/projects/torbrowser.html.en
-        download_url: https://www.torproject.org/dist/torbrowser/5.0.5
+        download_url: https://www.torproject.org/dist/torbrowser/5.0.6
         incremental_from:
           - 5.0.4
+          - 5.0.5
         migrate_archs:
           osx32: osx64
         osx32:
