@@ -1,6 +1,5 @@
 Tor Browser 5.0.6 -- December 18 2015
  * All Platforms
-   * Bug 16441: Suppress "Reset Tor Browser" prompt
    * Bug 17877: Tor Browser 5.0.5 is using the wrong Mozilla build tag
 
 Tor Browser 5.0.5 -- December 15 2015
