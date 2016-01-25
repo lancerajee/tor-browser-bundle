@@ -13,15 +13,12 @@ Tor Browser 6.0a1-hardened -- January 27 2016
      * Bug 11773: Setup wizard UI flow improvements
      * Translation updates
    * Bug 17428: Remove Flashproxy
-   * Bug 18115+18102+18071+18091: Update/add new obfs4 bridge
+   * Bug 18115+18104+18071+18091: Update/add new obfs4 bridge
    * Bug 18072: Change recommended pluggable transport type to obfs4
    * Bug 18008: Create a new MAR Signing key and bake it into Tor Browser
    * Bug 16322: Use onion address for DuckDuckGo search engine
    * Bug 17917: Changelog after update is empty if JS is disabled
    * Bug 17790: Map the proper SHIFT characters to the digit keys (fix of #15646)
- * Build System
-   * Linux
-     * Bug 15578: Switch to Debian Wheezy guest VMs (10.04 LTS is EOL)
 
 Tor Browser 5.5a6-hardened -- January 7 2016
  * All Platforms

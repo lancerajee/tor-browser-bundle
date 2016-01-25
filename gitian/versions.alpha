@@ -40,7 +40,7 @@ GO_X_NET_TAG=7dbad50ab5b31073856416cdcfeb2796d682f844
 OBFS4_TAG=obfs4proxy-0.0.5
 NOTOFONTS_TAG=720e34851382ee3c1ef024d8dffb68ffbfb234c2
 
-GITIAN_TAG=tor-browser-builder-3.x-9
+GITIAN_TAG=tor-browser-builder-3.x-8-gpgsux
 
 OPENSSL_VER=1.0.1q
 GMP_VER=5.1.3
