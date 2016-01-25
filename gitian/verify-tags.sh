@@ -121,11 +121,12 @@ noto-fonts              $NOTOFONTS_TAG
 EOF
 
 # Verify signatures on signed packages
-for i in OPENSSL BINUTILS GCC PYCRYPTO PYTHON_MSI GMP
+for i in OPENSSL BINUTILS GCC PYTHON PYCRYPTO PYTHON_MSI GMP LXML
 do
   PACKAGE="${i}_PACKAGE"
   URL="${i}_URL"
-  if [ "${i}" == "PYCRYPTO" -o "${i}" == "PYTHON_MSI" -o "${i}" == "OPENSSL" ]; then
+  if [ "${i}" == "PYTHON" -o "${i}" == "PYCRYPTO" -o "${i}" == "PYTHON_MSI" -o \
+       "${i}" == "LXML" -o "${i}" == "OPENSSL" ]; then
     SUFFIX="asc"
   else
     SUFFIX="sig"
