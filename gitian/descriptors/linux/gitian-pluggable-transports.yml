@@ -1,8 +1,7 @@
 ---
 name: "pluggable-transports-linux"
-distro: "debian"
 suites:
-- "wheezy"
+- "lucid"
 architectures:
 - "amd64"
 packages:
@@ -55,6 +54,7 @@ script: |
   INSTDIR="$HOME/install"
   PTDIR="$INSTDIR/Tor/PluggableTransports"
   mkdir -p $PTDIR
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
   export FAKETIME=$REFERENCE_DATETIME
   export TZ=UTC
   export LC_ALL=C
@@ -248,8 +248,7 @@ script: |
   cp -a obfs4proxy $PTDIR
   cd ../..
 
-  # Grabbing the results and making sure timestamps don't spoil them
-  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  # Grabbing the results
   cd $INSTDIR
   ~/build/dzip.sh pluggable-transports-linux$GBUILD_BITS-gbuilt.zip Tor/ Docs/
   cp pluggable-transports-linux$GBUILD_BITS-gbuilt.zip $OUTDIR/
