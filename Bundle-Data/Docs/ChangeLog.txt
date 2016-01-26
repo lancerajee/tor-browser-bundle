@@ -8,7 +8,7 @@ Tor Browser 6.0a1-hardened -- January 27 2016
      * Bug 18004: Remove Tor fundraising donation banner
      * Code cleanup
      * Translation updates
-   * Update Tor Launcher to 0.2.8.2
+   * Update Tor Launcher to 0.2.8.3
      * Bug 18113: Randomly permutate available default bridges of chosen type
      * Bug 11773: Setup wizard UI flow improvements
      * Translation updates
