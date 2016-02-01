@@ -60,7 +60,6 @@ script: |
   make $MAKEOPTS
   make install
   cd ..
-  export PATH=$INSTDIR/binutils/bin:$PATH
 
   # Building GCC
   tar xjf gcc.tar.bz2
