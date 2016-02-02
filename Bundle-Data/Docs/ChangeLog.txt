@@ -1,3 +1,11 @@
+Tor Browser 5.5.1 -- February 4 2016
+ * All Platforms
+   * Bug 18168: Don't clear an iframe's window.name (fix of #16620)
+   * Bug 18172: Add Emoji support
+   * Bug 18137: Add two new obfs4 default bridges
+ * Windows
+   * Bug 18169: Whitelist zh-CN UI font
+
 Tor Browser 5.5 -- January 26 2016
  * All Platforms
    * Update Firefox to 38.6.0esr
