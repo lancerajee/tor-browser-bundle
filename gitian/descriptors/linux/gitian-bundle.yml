@@ -1,7 +1,8 @@
 ---
 name: "bundle-linux"
+distro: "debian"
 suites:
-- "lucid"
+- "wheezy"
 architectures:
 - "amd64"
 packages:
@@ -107,9 +108,6 @@ script: |
   cd ../../../
   #
   cd https-everywhere
-  # Workaround for git not knowing `git submodule -f` in the version shipped in
-  # 10.04.
-  sed 's/recursive -f/recursive/' -i makexpi.sh
   # XXX: Bloody hack to workaround a bug in HTTPS_E's git hash extraction in
   # makexpi.sh. See https://trac.torproject.org/projects/tor/ticket/10066
   # The solution there does not work for us as doing something like
