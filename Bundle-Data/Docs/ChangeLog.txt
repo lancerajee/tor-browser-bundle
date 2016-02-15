@@ -13,6 +13,7 @@ Tor Browser 6.0a2-hardened -- February 15 2016
  * Build System
    * Linux
      * Bug 15578: Switch to Debian Wheezy guest VMs (10.04 LTS is EOL)
+     * Bug 18198: Building the hardened Tor Browser in a Debian Wheezy VM is broken
 
 Tor Browser 6.0a1-hardened -- January 27 2016
  * All Platforms
