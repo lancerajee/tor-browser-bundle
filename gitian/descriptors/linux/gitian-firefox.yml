@@ -108,7 +108,7 @@ script: |
   find -type f -print0 | xargs -0 touch --date="$REFERENCE_DATETIME"
   # Without disabling LSan our build is blowing up:
   # https://bugs.torproject.org/10599#comment:52
-  ASAN_OPTIONS="detect_leaks=0" make BUILD_HOSTNAME="gitian" $MAKEOPTS -f client.mk build
+  ASAN_OPTIONS="detect_leaks=0" make $MAKEOPTS -f client.mk build
   # Packaging is broken with libfaketime enabled, thus we disable it again. See
   # #12461 comments 11 and 12 for details.
   export LD_PRELOAD=""
