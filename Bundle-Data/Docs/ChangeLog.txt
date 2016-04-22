@@ -5,6 +5,7 @@ Tor Browser 5.5.5 -- April 26 2016
      * Bug 10534: Don't advertise the help desk directly anymore
      * Translation updates
    * Update HTTPS-Everywhere to 5.1.6
+   * Update NoScript to 2.9.0.11
    * Bug 18726: Add new default obfs4 bridge (GreenBelt)
 
 Tor Browser 5.5.4 -- March 16 2016
