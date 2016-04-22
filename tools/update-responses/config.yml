@@ -10,7 +10,7 @@ build_targets:
     osx64: Darwin_x86_64-gcc3
 channels:
     alpha: 5.5a6
-    release: 5.5.4
+    release: 5.5.5
 versions:
     5.5.5:
         platformVersion: 38.8.0
