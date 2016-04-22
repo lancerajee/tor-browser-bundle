@@ -2,6 +2,8 @@ TORSOCKS = torsocks
 
 all: clean resume
 
+nightly-hardened: nightly
+
 nightly: clean resume-nightly
 
 alpha: clean resume-alpha
