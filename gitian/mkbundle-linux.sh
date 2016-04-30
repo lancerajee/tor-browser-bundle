@@ -108,7 +108,7 @@ if [ ! -f inputs/binutils-$BINUTILS_VER-linux64-utils.zip -o \
      ! -f inputs/self-rando-utils.zip ];
 then
   echo
-  echo "****** Starting Utilities Component of Linux Bundle (1/5 for Linux) ******"
+  echo "****** Starting Utilities Component of Linux Bundle (1/6 for Linux) ******"
   echo
 
   ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit libevent=$LIBEVENT_TAG,selfrando=$SELFRANDO_TAG $DESCRIPTOR_DIR/linux/gitian-utils.yml
@@ -129,7 +129,7 @@ then
   #cp -a result/utils-linux-res.yml inputs/
 else
   echo
-  echo "****** SKIPPING already built Utilities Component of Linux Bundle (1/5 for Linux) ******"
+  echo "****** SKIPPING already built Utilities Component of Linux Bundle (1/6 for Linux) ******"
   echo
   # We might have built the utilities in the past but maybe the links are
   # pointing to the wrong version. Refresh them.
@@ -145,7 +145,7 @@ fi
 if [ ! -f inputs/tor-linux64-gbuilt.zip ];
 then
   echo
-  echo "****** Starting Tor Component of Linux Bundle (2/5 for Linux) ******"
+  echo "****** Starting Tor Component of Linux Bundle (2/6 for Linux) ******"
   echo
 
   ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit tor=$TOR_TAG $DESCRIPTOR_DIR/linux/gitian-tor.yml
@@ -160,14 +160,14 @@ then
   #cp -a result/tor-linux-res.yml inputs/
 else
   echo
-  echo "****** SKIPPING already built Tor Component of Linux Bundle (2/5 for Linux) ******"
+  echo "****** SKIPPING already built Tor Component of Linux Bundle (2/6 for Linux) ******"
   echo
 fi
 
 if [ ! -f inputs/tor-browser-linux64-gbuilt.zip ];
 then
   echo
-  echo "****** Starting TorBrowser Component of Linux Bundle (3/5 for Linux) ******"
+  echo "****** Starting TorBrowser Component of Linux Bundle (3/6 for Linux) ******"
   echo
 
   ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit tor-browser=$TORBROWSER_TAG,faketime=$FAKETIME_TAG,selfrando=$SELFRANDO_TAG $DESCRIPTOR_DIR/linux/gitian-firefox.yml
@@ -183,17 +183,39 @@ then
   #cp -a result/torbrowser-linux-res.yml inputs/
 else
   echo
-  echo "****** SKIPPING already built TorBrowser Component of Linux Bundle (3/5 for Linux) ******"
+  echo "****** SKIPPING already built TorBrowser Component of Linux Bundle (3/6 for Linux) ******"
+  echo
+fi
+
+if [ ! -f inputs/webrtc-linux32-gbuilt.zip -o \
+     ! -f inputs/webrtc-linux64-gbuilt.zip ];
+then
+  echo
+  echo "****** Starting WebRTC Component of Linux Bundle (4/6 for Linux) ******"
+  echo
+
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit depot_tools=$DEPOT_TOOLS_TAG $DESCRIPTOR_DIR/linux/gitian-webrtc.yml
+  if [ $? -ne 0 ];
+  then
+    #mv var/build.log ./webrtc-fail-linux.log.`date +%Y%m%d%H%M%S`
+    exit 1
+  fi
+
+  cp -a build/out/webrtc-linux*-gbuilt.zip inputs/
+  #cp -a result/webrtc-linux-res.yml inputs/
+else
+  echo
+  echo "****** SKIPPING already built WebRTC Component of Linux Bundle (4/6 for Linux) ******"
   echo
 fi
 
 if [ ! -f inputs/pluggable-transports-linux64-gbuilt.zip ];
 then
   echo
-  echo "****** Starting Pluggable Transports Component of Linux Bundle (4/5 for Linux) ******"
+  echo "****** Starting Pluggable Transports Component of Linux Bundle (5/6 for Linux) ******"
   echo
 
-  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit pyptlib=$PYPTLIB_TAG,obfsproxy=$OBFSPROXY_TAG,libfte=$LIBFTE_TAG,fteproxy=$FTEPROXY_TAG,txsocksx=$TXSOCKSX_TAG,goptlib=$GOPTLIB_TAG,meek=$MEEK_TAG,ed25519=$GOED25519_TAG,siphash=$GOSIPHASH_TAG,goxcrypto=$GO_X_CRYPTO_TAG,goxnet=$GO_X_NET_TAG,obfs4=$OBFS4_TAG $DESCRIPTOR_DIR/linux/gitian-pluggable-transports.yml
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit pyptlib=$PYPTLIB_TAG,obfsproxy=$OBFSPROXY_TAG,libfte=$LIBFTE_TAG,fteproxy=$FTEPROXY_TAG,txsocksx=$TXSOCKSX_TAG,goptlib=$GOPTLIB_TAG,meek=$MEEK_TAG,ed25519=$GOED25519_TAG,siphash=$GOSIPHASH_TAG,goxcrypto=$GO_X_CRYPTO_TAG,goxnet=$GO_X_NET_TAG,obfs4=$OBFS4_TAG,go-webrtc=$GO_WEBRTC_TAG,snowflake=$SNOWFLAKE_TAG,uniuri=$UNIURI_TAG $DESCRIPTOR_DIR/linux/gitian-pluggable-transports.yml
   if [ $? -ne 0 ];
   then
     #mv var/build.log ./pluggable-transports-fail-linux.log.`date +%Y%m%d%H%M%S`
@@ -204,14 +226,14 @@ then
   #cp -a result/pluggable-transports-linux-res.yml inputs/
 else
   echo
-  echo "****** SKIPPING already built Pluggable Transports Component of Linux Bundle (4/5 for Linux) ******"
+  echo "****** SKIPPING already built Pluggable Transports Component of Linux Bundle (5/6 for Linux) ******"
   echo
 fi
 
 if [ ! -f inputs/bundle-linux.gbuilt ];
 then
   echo
-  echo "****** Starting Bundling+Localization of Linux Bundle (5/5 for Linux) ******"
+  echo "****** Starting Bundling+Localization of Linux Bundle (6/6 for Linux) ******"
   echo
 
   cd $WRAPPER_DIR && ./record-inputs.sh $VERSIONS_FILE && cd $GITIAN_DIR
@@ -231,7 +253,7 @@ then
   touch inputs/bundle-linux.gbuilt
 else
   echo
-  echo "****** SKIPPING already built Bundling+Localization of Linux Bundle (5/5 for Linux) ******"
+  echo "****** SKIPPING already built Bundling+Localization of Linux Bundle (6/6 for Linux) ******"
   echo
 fi
 

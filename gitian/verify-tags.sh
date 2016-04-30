@@ -108,6 +108,7 @@ EOF
 while read dir commit; do
   check_git_hash "$dir" "$commit"
 done << EOF
+libcxx                  $LIBCXX_TAG
 mingw-w64-git           $MINGW_TAG
 libdmg-hfsplus          $LIBDMG_TAG
 libfte                  $LIBFTE_TAG
@@ -120,6 +121,10 @@ goxcrypto               $GO_X_CRYPTO_TAG
 goxnet                  $GO_X_NET_TAG
 noto-fonts              $NOTOFONTS_TAG
 selfrando               $SELFRANDO_TAG
+depot_tools             $DEPOT_TOOLS_TAG
+go-webrtc               $GO_WEBRTC_TAG
+snowflake               $SNOWFLAKE_TAG
+uniuri                  $UNIURI_TAG
 EOF
 
 # Verify signatures on signed packages
@@ -152,6 +157,7 @@ do
    fi
 done
 
+# webrtc? Its fetch brings in sources from many repos.
 
 cd "$INPUTS_DIR"
 verify_git "." "$WRAPPER_DIR/gpg/torbutton.gpg" "$GITIAN_TAG"
