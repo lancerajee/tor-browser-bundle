@@ -270,6 +270,9 @@ fi
 
 LD_LIBRARY_PATH="${HOME}/TorBrowser/Tor/"
 export LD_LIBRARY_PATH
+export SELFRANDO_write_layout_file=
+export NSS_DISABLE_HW_AES=1
+
 # We need to disable LSan which is enabled by default now. Otherwise we'll get
 # a crash during shutdown: https://bugs.torproject.org/10599#comment:59
 ASAN_OPTIONS="detect_leaks=0"

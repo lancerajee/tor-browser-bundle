@@ -118,10 +118,11 @@ siphash                 $GOSIPHASH_TAG
 goxcrypto               $GO_X_CRYPTO_TAG
 goxnet                  $GO_X_NET_TAG
 noto-fonts              $NOTOFONTS_TAG
+selfrando               $SELFRANDO_TAG
 EOF
 
 # Verify signatures on signed packages
-for i in OPENSSL BINUTILS GCC PYCRYPTO PYTHON_MSI GMP
+for i in OPENSSL BINUTILS GCC PYCRYPTO PYTHON_MSI GMP ELFUTILS
 do
   PACKAGE="${i}_PACKAGE"
   URL="${i}_URL"

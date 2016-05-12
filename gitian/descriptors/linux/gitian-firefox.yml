@@ -29,12 +29,15 @@ remotes:
   "dir": "tor-browser"
 - "url": "https://github.com/wolfcw/libfaketime"
   "dir": "faketime"
+- "url": "https://github.com/immunant/selfrando.git"
+  "dir": "selfrando"
 files:
 - "binutils-linux64-utils.zip"
 - "gcc-linux64-utils.zip"
 - "re-dzip.sh"
 - "dzip.sh"
 - "versions"
+- "self-rando-utils.zip"
 script: |
   source versions
   INSTDIR="$HOME/install"
@@ -49,6 +52,7 @@ script: |
   export DEB_BUILD_HARDENING_FORMAT=1
   export DEB_BUILD_HARDENING_PIE=1
   #
+  unzip -d $INSTDIR self-rando-utils.zip
   # Preparing Binutils and GCC for Tor Browser
   unzip -d $INSTDIR binutils-linux$GBUILD_BITS-utils.zip
   # Make sure gold is used with the hardening wrapper for full RELRO, see
@@ -96,6 +100,9 @@ script: |
   # that feature it would hang sometimes for unknown but to libfaketime related
   # reasons.
   export LD_PRELOAD=""
+  # Self-Rando wrapper
+  export PATH="$HOME/build/selfrando/Tools/TorBrowser/tc-wrapper/:$PATH"
+  export SELFRANDO_skip_shuffle=
   make -f client.mk configure CONFIGURE_ARGS="--with-tor-browser-version=${TORBROWSER_VERSION} --enable-update-channel=${TORBROWSER_UPDATE_CHANNEL} --enable-bundled-fonts"
   # We need libfaketime for all the timestamps e.g. written into the libraries.
   # BUT we need to exclude |make build| from it. Otherwise the build fails close

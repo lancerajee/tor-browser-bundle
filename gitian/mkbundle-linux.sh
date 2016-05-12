@@ -35,7 +35,7 @@ fi
 
 if [ -z "$VM_MEMORY" ];
 then
-  export VM_MEMORY=4000
+  export VM_MEMORY=6000
 fi
 
 ./make-vms.sh
@@ -104,13 +104,14 @@ if [ ! -f inputs/binutils-$BINUTILS_VER-linux64-utils.zip -o \
      ! -f inputs/gcc-$GCC_VER-linux64-utils.zip -o \
      ! -f inputs/openssl-$OPENSSL_VER-linux64-utils.zip -o \
      ! -f inputs/libevent-${LIBEVENT_TAG_ORIG#release-}-linux64-utils.zip -o \
-     ! -f inputs/gmp-$GMP_VER-linux64-utils.zip ];
+     ! -f inputs/gmp-$GMP_VER-linux64-utils.zip -o \
+     ! -f inputs/self-rando-utils.zip ];
 then
   echo
   echo "****** Starting Utilities Component of Linux Bundle (1/5 for Linux) ******"
   echo
 
-  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit libevent=$LIBEVENT_TAG $DESCRIPTOR_DIR/linux/gitian-utils.yml
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit libevent=$LIBEVENT_TAG,selfrando=$SELFRANDO_TAG $DESCRIPTOR_DIR/linux/gitian-utils.yml
   if [ $? -ne 0 ];
   then
     #mv var/build.log ./utils-fail-linux.log.`date +%Y%m%d%H%M%S`
@@ -169,7 +170,7 @@ then
   echo "****** Starting TorBrowser Component of Linux Bundle (3/5 for Linux) ******"
   echo
 
-  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit tor-browser=$TORBROWSER_TAG,faketime=$FAKETIME_TAG $DESCRIPTOR_DIR/linux/gitian-firefox.yml
+  ./bin/gbuild -j $NUM_PROCS -m $VM_MEMORY --commit tor-browser=$TORBROWSER_TAG,faketime=$FAKETIME_TAG,selfrando=$SELFRANDO_TAG $DESCRIPTOR_DIR/linux/gitian-firefox.yml
   if [ $? -ne 0 ];
   then
     #mv var/build.log ./firefox-fail-linux.log.`date +%Y%m%d%H%M%S`
