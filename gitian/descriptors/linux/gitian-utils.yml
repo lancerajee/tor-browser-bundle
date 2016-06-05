@@ -23,14 +23,10 @@ packages:
 - "libssl-dev"
 # Needed for binutils (64bit) as we are building with PIE enabled.
 - "libstdc++6-4.7-pic"
-# Needed for Selfrando
-- "scons"
 reference_datetime: "2000-01-01 00:00:00"
 remotes:
 - "url": "https://github.com/libevent/libevent.git"
   "dir": "libevent"
-- "url": "https://github.com/immunant/selfrando.git"
-  "dir": "selfrando"
 files:
 - "binutils.tar.bz2"
 - "gcc.tar.bz2"
@@ -40,7 +36,6 @@ files:
 - "versions"
 - "dzip.sh"
 - "libfaketime-asan.patch"
-- "elfutils.tar.bz2"
 script: |
   INSTDIR="$HOME/install"
   source versions
@@ -61,8 +56,11 @@ script: |
   # The libstdc++ shipped by default is non-PIC which breaks the binutils build
   # if we build with DEB_BUILD_HARDENING_PIE=1. We need to install a PIC one AND
   # make sure it gets used before the non-PIC one would.
-  ln -s /usr/lib/gcc/x86_64-linux-gnu/4.7/libstdc++_pic.a libstdc++.a
-  export LDFLAGS="-L/home/debian -lstdc++"
+  if [ $GBUILD_BITS == "64" ];
+  then
+    ln -s /usr/lib/gcc/x86_64-linux-gnu/4.7/libstdc++_pic.a libstdc++.a
+    export LDFLAGS="-L/home/debian -lstdc++"
+  fi
   cd binutils*
   # We want to use gold as the linker in our toolchain mainly as it is way
   # faster when linking Tor Browser code (especially libxul). But apart from
@@ -88,31 +86,6 @@ script: |
   cd ..
 
   export DEB_BUILD_HARDENING_FORMAT=1
-  OPATH="$PATH"
-  OLD_LIBRARY_PATH="$LD_LIBRARY_PATH"
-  export PATH="$INSTDIR/binutils/bin:$INSTDIR/gcc/bin:$PATH"
-  export LD_LIBRARY_PATH="$INSTDIR/gcc/lib64/:$LD_LIBRARY_PATH"
-
-  # Building Elfutils
-  tar xjf elfutils.tar.bz2
-  cd elfutils*/
-  ./configure --prefix=$INSTDIR/elfutils
-  make $MAKEOPTS
-  make install
-  cd ..
-
-  # Building Selfrando
-  cd selfrando
-  scons -Q arch=x86_64 ADDN_CCFLAGS="-include $(ls $HOME/build/elfutils-*/libelf/elf.h) -I $INSTDIR/elfutils/include -fno-reorder-functions" ADDN_LINKFLAGS="-L $INSTDIR/elfutils/lib"
-  mkdir -p $INSTDIR/self-rando
-  cp sconsRelease/x86_64/bin/* $INSTDIR/self-rando/
-  cd ..
-
-  PATH="$OPATH"
-  unset OPATH
-  LD_LIBRARY_PATH="$OLD_LIBRARY_PATH"
-  unset OLD_LIBRARY_PATH
-
   # Building Libevent
   cd libevent
   ./autogen.sh
@@ -158,5 +131,4 @@ script: |
   ~/build/dzip.sh openssl-$OPENSSL_VER-linux$GBUILD_BITS-utils.zip openssl
   ~/build/dzip.sh libevent-${LIBEVENT_TAG#release-}-linux$GBUILD_BITS-utils.zip libevent
   ~/build/dzip.sh gmp-$GMP_VER-linux$GBUILD_BITS-utils.zip gmp
-  ~/build/dzip.sh self-rando-utils.zip self-rando
   cp *utils.zip $OUTDIR/

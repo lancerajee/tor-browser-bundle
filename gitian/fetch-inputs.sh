@@ -112,7 +112,7 @@ update_git() {
 
 ##############################################################################
 # Get+verify sigs that exist
-for i in OPENSSL BINUTILS GCC PYCRYPTO PYTHON_MSI GMP ELFUTILS
+for i in OPENSSL BINUTILS GCC PYCRYPTO PYTHON_MSI GMP
 do
   PACKAGE="${i}_PACKAGE"
   URL="${i}_URL"
@@ -237,7 +237,6 @@ ln -sf "$GMP_PACKAGE" gmp.tar.bz2
 ln -sf "$PARSLEY_PACKAGE" parsley.tar.gz
 ln -sf "$GO14_PACKAGE" go14.tar.gz
 ln -sf "$GO_PACKAGE" go.tar.gz
-ln -sf "$ELFUTILS_PACKAGE" elfutils.tar.bz2
 
 # Fetch latest gitian-builder itself
 # XXX - this is broken if a non-standard inputs dir is selected using the command line flag.
@@ -275,7 +274,6 @@ goxcrypto             https://go.googlesource.com/crypto  $GO_X_CRYPTO_TAG
 goxnet                https://go.googlesource.com/net  $GO_X_NET_TAG
 obfs4                 https://git.torproject.org/pluggable-transports/obfs4.git $OBFS4_TAG
 noto-fonts            https://github.com/googlei18n/noto-fonts $NOTOFONTS_TAG
-selfrando             https://github.com/immunant/selfrando.git $SELFRANDO_TAG
 EOF
 
 # HTTPS-Everywhere is special, too. We need to initialize the git submodules and
