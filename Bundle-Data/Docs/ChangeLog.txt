@@ -1,3 +1,21 @@
+Tor Browser 6.0.3 -- August 2
+ * All Platforms
+   * Update Firefox to 45.3.0esr
+   * Update Torbutton to 1.9.5.6
+     * Bug 19417: Disable asmjs for now
+     * Bug 19689: Use proper parent window for plugin prompt
+   * Update HTTPS-Everywhere to 5.2.1
+   * Bug 19417: Disable asmjs for now
+   * Bug 19715: Disable the meek-google pluggable transport option
+   * Bug 19714: Remove mercurius4 obfs4 bridge
+   * Bug 19585: Fix regression test for keyboard layout fingerprinting
+   * Bug 19515: Tor Browser is crashing in graphics code
+   * Bug 18513: Favicon requests can bypass New Identity
+ * OS X
+   * Bug 19269: Icon doesn't appear in Applications folder or Dock
+ * Android
+   * Bug 19484: Avoid compilation error when MOZ_UPDATER is not defined
+
 Tor Browser 6.0.2 -- June 21
  * All Platforms
    * Update Torbutton to 1.9.5.5
