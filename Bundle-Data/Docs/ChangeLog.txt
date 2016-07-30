@@ -5,6 +5,7 @@ Tor Browser 6.0.3 -- August 2
      * Bug 19417: Disable asmjs for now
      * Bug 19689: Use proper parent window for plugin prompt
    * Update HTTPS-Everywhere to 5.2.1
+   * Update NoScript to 2.9.0.12
    * Bug 19417: Disable asmjs for now
    * Bug 19715: Disable the meek-google pluggable transport option
    * Bug 19714: Remove mercurius4 obfs4 bridge
