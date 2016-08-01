@@ -6,6 +6,7 @@
 MIRROR_URL=https://people.torproject.org/~mikeperry/mirrors/sources/
 MIRROR_URL_DCF=https://people.torproject.org/~dcf/mirrors/sources/
 MIRROR_URL_ASN=https://people.torproject.org/~asn/mirrors/sources/
+MIRROR_URL_GK=https://people.torproject.org/~asn/mirrors/sources/
 set -e
 set -u
 umask 0022
@@ -136,6 +137,13 @@ do
   PACKAGE="${i}_PACKAGE"
   URL="${MIRROR_URL}${!PACKAGE}"
   get "${!PACKAGE}" "${MIRROR_URL}${!PACKAGE}"
+done
+
+for i in CCTOOLS
+do
+  PACKAGE="${i}_PACKAGE"
+  URL="${MIRROR_URL_GK}${!PACKAGE}"
+  get "${!PACKAGE}" "${MIRROR_URL_GK}${!PACKAGE}"
 done
 
 # XXX: Omit googlecode.com packages because Google won't allow wget -N
