@@ -6,7 +6,7 @@
 MIRROR_URL=https://people.torproject.org/~mikeperry/mirrors/sources/
 MIRROR_URL_DCF=https://people.torproject.org/~dcf/mirrors/sources/
 MIRROR_URL_ASN=https://people.torproject.org/~asn/mirrors/sources/
-MIRROR_URL_GK=https://people.torproject.org/~asn/mirrors/sources/
+MIRROR_URL_GK=https://people.torproject.org/~gk/mirrors/sources/
 set -e
 set -u
 umask 0022
