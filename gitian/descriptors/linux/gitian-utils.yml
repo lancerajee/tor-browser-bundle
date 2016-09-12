@@ -35,7 +35,6 @@ files:
 - "binutils.tar.bz2"
 - "gcc.tar.bz2"
 - "openssl.tar.gz"
-- "openssl-Make-build-reproducible.patch"
 - "gmp.tar.bz2"
 - "versions"
 - "dzip.sh"
@@ -125,7 +124,6 @@ script: |
   # Building OpenSSL
   tar xzf openssl.tar.gz
   cd openssl-*
-  patch -p1 < ../openssl-Make-build-reproducible.patch
   find -type f -print0 | xargs -0 touch --date="$REFERENCE_DATETIME"
   ./config -shared --prefix=$INSTDIR/openssl enable-ec_nistp_64_gcc_128
   # Using $MAKEOPTS breaks the build. Might be the issue mentioned on
