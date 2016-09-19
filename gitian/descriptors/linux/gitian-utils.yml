@@ -104,7 +104,7 @@ script: |
   cd selfrando
   scons -Q arch=x86_64 ADDN_CCFLAGS="-include $(ls $HOME/build/elfutils-*/libelf/elf.h) -I $INSTDIR/elfutils/include -fno-reorder-functions" ADDN_LINKFLAGS="-L $INSTDIR/elfutils/lib"
   mkdir -p $INSTDIR/self-rando
-  cp sconsRelease/x86_64/bin/* $INSTDIR/self-rando/
+  cp sconsRelease/x86_64/gcc/bin/* $INSTDIR/self-rando/
   cd ..
 
   PATH="$OPATH"
