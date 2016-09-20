@@ -3,7 +3,7 @@ Tor Browser 6.0.5 -- September 16
    * Update Firefox to 45.4.0esr
    * Update Tor to 0.2.8.7
    * Update Torbutton to 1.9.5.7
-     * Bug 18589: Clear site security settings during New Identity
+     * Bug 19995: Clear site security settings during New Identity
      * Bug 19906: "Maximizing Tor Browser" Notification can exist multiple times
    * Update HTTPS-Everywhere to 5.2.4
    * Bug 20092: Rotate ports for default obfs4 bridges
