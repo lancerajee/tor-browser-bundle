@@ -1,4 +1,4 @@
-Tor Browser 6.5a3 -- September 20 2016
+Tor Browser 6.5a3-hardened -- September 20 2016
  * All Platforms
    * Update Firefox to 45.4.0esr
    * Update Tor to 0.2.9.2-alpha
