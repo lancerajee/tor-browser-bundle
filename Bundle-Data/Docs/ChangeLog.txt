@@ -24,7 +24,7 @@ Tor Browser 6.0.6 -- November 15
    * Bug 20250: Meek fails on macOS Sierra if built with Go < 1.7
  * Build system
    * All platforms
-     * Upgrade Go to 1.7.3
+     * Bug 20023: Upgrade Go to 1.7.3
 
 Tor Browser 6.0.5 -- September 16
  * All Platforms
