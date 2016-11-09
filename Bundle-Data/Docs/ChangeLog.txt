@@ -1,3 +1,31 @@
+Tor Browser 6.0.6 -- November 15
+ * All Platforms
+   * Update Firefox to 45.5.0esr
+   * Update Tor to 0.2.8.9
+   * Update OpenSSL to 1.0.1u
+   * Update Torbutton to 1.9.5.8
+     * Bug 20414: Add donation banner on about:tor for 2016 campaign
+     * Translation updates
+   * Update Tor Launcher to 0.2.9.4
+     * Bug 20429: Do not open progress window if tor doesn't get started
+     * Bug 19646: Wrong location for meek browser profile on OS X
+   * Update HTTPS-Everywhere to 5.2.7
+   * Update meek to 0.25
+     * Bug 19646: Wrong location for meek browser profile on OS X
+     * Bug 20030: Shut down meek-http-helper cleanly if built with Go > 1.5.4
+   * Bug 19838: Add dgoulet's bridge and add another one commented out
+   * Bug 20296: Rotate ports again for default obfs4 bridges
+   * Bug 19735: Switch default search engine to DuckDuckGo
+   * Bug 20118: Don't unpack HTTPS Everywhere anymore
+ * Windows
+   * Bug 20342: Add tor-gencert.exe to expert bundle
+ * OS X
+   * Bug 20204: Windows don't drag on macOS Sierra anymore
+   * Bug 20250: Meek fails on macOS Sierra if built with Go < 1.7
+ * Build system
+   * All platforms
+     * Upgrade Go to 1.7.3
+
 Tor Browser 6.0.5 -- September 16
  * All Platforms
    * Update Firefox to 45.4.0esr
