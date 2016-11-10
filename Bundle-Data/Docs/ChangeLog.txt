@@ -21,6 +21,10 @@ Tor Browser 6.0.6 -- November 15
    * Bug 20342: Add tor-gencert.exe to expert bundle
  * OS X
    * Bug 20204: Windows don't drag on macOS Sierra anymore
+   * Bug 20250: Meek fails on macOS Sierra if built with Go < 1.7
+ * Build system
+   * All platforms
+     * Bug 20023: Upgrade Go to 1.7.3
 
 Tor Browser 6.0.5 -- September 16
  * All Platforms
