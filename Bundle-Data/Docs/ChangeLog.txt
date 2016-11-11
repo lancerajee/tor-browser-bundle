@@ -3,7 +3,7 @@ Tor Browser 6.0.6 -- November 15
    * Update Firefox to 45.5.0esr
    * Update Tor to 0.2.8.9
    * Update OpenSSL to 1.0.1u
-   * Update Torbutton to 1.9.5.9
+   * Update Torbutton to 1.9.5.10
      * Bug 20414: Add donation banner on about:tor for 2016 campaign
      * Translation updates
    * Update Tor Launcher to 0.2.9.4
