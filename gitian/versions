@@ -68,7 +68,7 @@ NSIS_VER=2.51
 ## File names for the source packages
 OPENSSL_PACKAGE=openssl-${OPENSSL_VER}.tar.gz
 GMP_PACKAGE=gmp-${GMP_VER}.tar.bz2
-NOSCRIPT_PACKAGE=noscript_security_suite-2.9.5.2-fx+fn+sm.xpi
+NOSCRIPT_PACKAGE=noscript_security_suite-2.9.5.2-fx+sm.xpi
 TOOLCHAIN4_OLD_PACKAGE=multiarch-darwin11-cctools127.2-gcc42-5666.3-llvmgcc42-2336.1-Linux-120724.tar.xz
 CCTOOLS_PACKAGE=cctools.tar.gz
 OSXSDK_PACKAGE=MacOSX10.7.sdk.tar.gz
