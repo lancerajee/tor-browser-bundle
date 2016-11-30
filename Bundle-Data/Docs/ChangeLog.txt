@@ -1,6 +1,7 @@
 Tor Browser 6.0.7 -- November 30
  * All Platforms
    * Update Firefox to 45.5.1esr
+   * Update NoScript to 2.9.5.2
 
 Tor Browser 6.0.6 -- November 15
  * All Platforms
