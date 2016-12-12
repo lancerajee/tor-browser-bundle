@@ -2,6 +2,8 @@ Tor Browser 6.0.8 -- December 13
  * All Platforms
    * Update Firefox to 45.6.0esr
    * Tor to 0.2.8.11
+   * Update Torbutton to 1.9.5.13
+     * Bug 20947: Donation banner improvements
    * Update HTTPS-Everywhere to 5.2.8
    * Bug 20809: Use non-/html search engine URL for DuckDuckGo search plugins
    * Bug 20837: Activate iat-mode for certain obfs4 bridges
