@@ -59,11 +59,8 @@ files:
 - "dzip.sh"
 - "gmp-linux64-utils.zip"
 - "openssl-linux64-utils.zip"
-- "binutils-linux32-utils.zip"
 - "binutils-linux64-utils.zip"
-- "gcc-linux32-utils.zip"
 - "gcc-linux64-utils.zip"
-- "webrtc-linux32-gbuilt.zip"
 - "webrtc-linux64-gbuilt.zip"
 script: |
   INSTDIR="$HOME/install"

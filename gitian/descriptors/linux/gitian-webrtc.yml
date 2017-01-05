@@ -4,7 +4,6 @@ distro: "debian"
 suites:
 - "wheezy"
 architectures:
-- "i386"
 - "amd64"
 packages:
 - "unzip"
@@ -24,9 +23,7 @@ remotes:
   "dir": "depot_tools"
 files:
 - "dzip.sh"
-- "binutils-linux32-utils.zip"
 - "binutils-linux64-utils.zip"
-- "gcc-linux32-utils.zip"
 - "gcc-linux64-utils.zip"
 - "webrtc.tar.gz"
 script: |
