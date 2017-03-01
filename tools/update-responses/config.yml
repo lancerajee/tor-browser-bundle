@@ -20,13 +20,13 @@ build_targets:
     osx64: Darwin_x86_64-gcc3
 channels:
     alpha: 6.5a6
-    release: 6.5
+    release: 6.5.1
 versions:
-    6.5:
-        platformVersion: 45.7.0
-        detailsURL: https://blog.torproject.org/blog/tor-browser-65-released
+    6.5.1:
+        platformVersion: 45.8.0
+        detailsURL: https://blog.torproject.org/blog/tor-browser-651-released
         incremental_from:
-          - 6.0.8
+          - 6.5
         migrate_archs:
           osx32: osx64
         migrate_langs:
