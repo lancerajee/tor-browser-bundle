@@ -3,13 +3,13 @@ Tor Browser 6.5.1 -- March 6 2017
    * Update Firefox to 45.8.0esr
    * Tor to 0.2.9.10
    * OpenSSL to 1.0.2k
-   * Update Torbutton to 1.9.6.13
+   * Update Torbutton to 1.9.6.14
      * Bug 21396: Allow leaking of resource/chrome URIs (off by default)
      * Bug 21574: Add link for zh manual and create manual links dynamically
      * Bug 21330: Non-usable scrollbar appears in tor browser security settings
      * Translation updates
    * Update HTTPS-Everywhere to 5.2.11
-   * Bug 21514: Back out backported W^X patches due to conflicts in 45.8.0esr
+   * Bug 21514: Restore W^X JIT implementation removed from ESR45
    * Bug 21536: Remove scramblesuit bridge
    * Bug 21342: Move meek-azure to the meek.azureedge.net backend and cymrubridge02 bridge
  * Linux
